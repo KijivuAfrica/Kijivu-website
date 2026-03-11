@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, MessageCircle, ArrowRight } from 'lucide-react';
 
 const INK    = '#2C3539';
@@ -91,13 +92,9 @@ const WHY_ROWS = [
   ['Standard',    'Lustriva®, Biotin & bioavailable vitamins'],
 ];
 
-export default function HomePage() {
-  const [cart, setCart]               = useState([]);
-  const [hoveredProduct, setHovered]  = useState(null);
-
-  const addToCart = (product) => {
-    if (product.stock === 'In Stock') setCart(c => [...c, product]);
-  };
+export default function HomePage({ cart = [], onAddToCart }) {
+  const [hoveredProduct, setHovered] = useState(null);
+  const navigate = useNavigate();
 
   return (
     <div style={{ minHeight: '100vh', fontFamily: "'Inter', sans-serif", background: CREAM, color: INK, overflowX: 'hidden' }}>
@@ -122,7 +119,7 @@ export default function HomePage() {
              style={{ textDecoration: 'none', color: INK, fontSize: '0.8rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             Support
           </a>
-          <button style={{ position: 'relative', background: 'none', border: 'none', cursor: 'pointer', padding: '0.25rem', color: INK }}>
+          <button onClick={() => navigate('/checkout')} style={{ position: 'relative', background: 'none', border: 'none', cursor: 'pointer', padding: '0.25rem', color: INK }}>
             <ShoppingCart style={{ width: 22, height: 22 }} />
             {cart.length > 0 && (
               <span style={{ position: 'absolute', top: -6, right: -6, background: BLUSH, color: INK, fontSize: '0.62rem', width: 18, height: 18, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
@@ -265,7 +262,7 @@ export default function HomePage() {
                     {product.price.toLocaleString()}
                   </span>
                   <button
-                    onClick={() => addToCart(product)}
+                    onClick={() => onAddToCart(product)}
                     style={{
                       fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.7rem',
                       textTransform: 'uppercase', letterSpacing: '0.06em',
