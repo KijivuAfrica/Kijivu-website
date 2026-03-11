@@ -1,128 +1,105 @@
-import React, { useState } from 'react';
-import { ShoppingCart, Trash2, CreditCard, MapPin, User, Lock, ArrowRight, Check, AlertCircle } from 'lucide-react';
+import { useState } from 'react';
+import { supabase } from '../lib/supabase';
+import { ArrowRight, ShoppingBag, CheckCircle } from 'lucide-react';
 
-const CheckoutPage = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "MaryRuth Peach Mango Liquid Hair Supplement",
-      price: 7499,
-      quantity: 2,
-      image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=200&h=200&fit=crop"
-    },
-    {
-      id: 3,
-      name: "Kids Immunity Gummies",
-      price: 4000,
-      quantity: 1,
-      image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=200&h=200&fit=crop"
-    }
-  ]);
+const INK    = '#2C3539';
+const SAGE   = '#87A96B';
+const CANVAS = '#E8E6E1';
+const CREAM  = '#FDFBF7';
+const BLUSH  = '#F4C7C3';
 
-  const [location, setLocation] = useState('');
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [orderComplete, setOrderComplete] = useState(false);
+const DELIVERY_FEE = 350; // KES
 
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    county: '',
-    town: '',
-    address: ''
+const Field = ({ label, type = 'text', value, onChange, placeholder, required = true, options }) => (
+  <div style={{ marginBottom: '1.5rem' }}>
+    <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: `rgba(44,53,57,0.6)`, marginBottom: '0.5rem' }}>
+      {label}{required && <span style={{ color: SAGE }}> *</span>}
+    </label>
+    {options ? (
+      <select value={value} onChange={e => onChange(e.target.value)}
+        style={{ width: '100%', padding: '0.85rem 1rem', border: `1.5px solid rgba(44,53,57,0.2)`, background: CREAM, color: INK, fontSize: '0.95rem', fontFamily: 'inherit', outline: 'none' }}>
+        {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+      </select>
+    ) : (
+      <input
+        type={type} value={value} onChange={e => onChange(e.target.value)}
+        placeholder={placeholder} required={required}
+        style={{ width: '100%', padding: '0.85rem 1rem', border: `1.5px solid rgba(44,53,57,0.2)`, background: CREAM, color: INK, fontSize: '0.95rem', fontFamily: 'inherit', outline: 'none' }}
+      />
+    )}
+  </div>
+);
+
+export default function CheckoutPage({ cart = [], onClearCart }) {
+  const [form, setForm] = useState({
+    name: '', email: '', phone: '', address: '', city: '', country: 'Kenya', notes: '',
   });
+  const [status, setStatus]  = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+  const [errorMsg, setError] = useState('');
 
-  const deliveryFees = {
-    'nairobi-cbd': 200,
-    'nairobi-suburbs': 350,
-    'nairobi-other': 500,
-    'kampala': 1000,
-    'other': 0
-  };
+  const set = (field) => (val) => setForm(f => ({ ...f, [field]: val }));
 
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const deliveryFee = deliveryFees[location] || 0;
-  const total = subtotal + deliveryFee;
+  const subtotal = cart.reduce((sum, item) => sum + item.price * (item.qty || 1), 0);
+  const total    = subtotal + DELIVERY_FEE;
 
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-  };
-
-  const updateQuantity = (id, newQuantity) => {
-    if (newQuantity < 1) return;
-    setCartItems(cartItems.map(item => 
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    ));
-  };
-
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsProcessing(true);
+    setStatus('loading');
+    setError('');
 
-    // Simulate Stripe checkout
-    setTimeout(() => {
-      setIsProcessing(false);
-      setOrderComplete(true);
-    }, 2000);
+    const orderItems = cart.map(item => ({
+      product_id: item.id,
+      name:       item.name,
+      price:      item.price,
+      quantity:   item.qty || 1,
+    }));
+
+    const { error } = await supabase.from('orders').insert({
+      customer_name:    form.name,
+      customer_email:   form.email,
+      customer_phone:   form.phone,
+      delivery_address: form.address,
+      delivery_city:    form.city,
+      delivery_country: form.country,
+      notes:            form.notes,
+      items:            orderItems,
+      subtotal,
+      delivery_fee:     DELIVERY_FEE,
+      total_amount:     total,
+      payment_status:   'pending',
+    });
+
+    if (error) {
+      setStatus('error');
+      setError('Something went wrong saving your order. Please try WhatsApp instead.');
+      return;
+    }
+
+    // TODO: once Pesapal is set up, replace the success screen with a redirect:
+    // const { data } = await supabase.functions.invoke('create-pesapal-order', {
+    //   body: { amount: total, currency: 'KES', phone: form.phone, email: form.email, name: form.name }
+    // });
+    // window.location.href = data.redirect_url;
+
+    setStatus('success');
+    if (onClearCart) onClearCart();
   };
 
-  if (orderComplete) {
+  if (status === 'success') {
     return (
-      <div className="min-h-screen bg-[#E8E6E1] flex items-center justify-center px-6">
-        <div className="max-w-2xl w-full bg-white p-12 text-center space-y-8">
-          <div className="w-24 h-24 bg-[#87A96B] rounded-full mx-auto flex items-center justify-center">
-            <Check className="w-12 h-12 text-white" />
-          </div>
-          
-          <div className="space-y-4">
-            <h1 className="text-5xl font-black text-[#2C3539]">
-              order
-              <br />
-              complete!
-            </h1>
-            <p className="text-xl text-[#2C3539]/70">
-              Thank you for your order. Check your email for confirmation.
-            </p>
-          </div>
-
-          <div className="bg-[#E8E6E1] p-6 space-y-2 text-left">
-            <div className="flex justify-between text-sm">
-              <span className="font-medium text-[#2C3539]/60">Order Number:</span>
-              <span className="font-black text-[#2C3539]">#{Math.random().toString(36).substr(2, 9).toUpperCase()}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="font-medium text-[#2C3539]/60">Total Paid:</span>
-              <span className="font-black text-[#2C3539]">KES {total.toLocaleString()}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="font-medium text-[#2C3539]/60">Payment Method:</span>
-              <span className="font-black text-[#2C3539]">Stripe</span>
-            </div>
-          </div>
-
-          <div className="space-y-4 pt-6">
-            <a 
-              href="/"
-              className="block w-full bg-[#2C3539] text-white py-4 font-black hover:bg-[#87A96B] transition-all"
-            >
-              CONTINUE SHOPPING
-            </a>
-            <a 
-              href="https://wa.me/254705016590"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full border-2 border-[#87A96B] text-[#87A96B] py-4 font-black hover:bg-[#87A96B] hover:text-white transition-all"
-            >
-              CONTACT SUPPORT
-            </a>
+      <div style={{ minHeight: '100vh', background: CREAM, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+        <div style={{ textAlign: 'center', maxWidth: 480 }}>
+          <CheckCircle style={{ width: 64, height: 64, color: SAGE, margin: '0 auto 2rem' }} />
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '2.5rem', marginBottom: '1rem', color: INK }}>Order Received!</h2>
+          <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.25rem', color: `rgba(44,53,57,0.75)`, marginBottom: '2rem', lineHeight: 1.5 }}>
+            Thank you for your order. We'll contact you on WhatsApp within 24 hours to confirm payment and delivery details.
+          </p>
+          <a href="https://wa.me/254705016590" target="_blank" rel="noopener noreferrer"
+             style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '0.9rem 2rem', fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.06em', textDecoration: 'none', background: SAGE, color: 'white', border: `2px solid ${SAGE}`, boxShadow: `4px 4px 0 ${INK}` }}>
+            Message Us on WhatsApp <ArrowRight style={{ width: 15, height: 15 }} />
+          </a>
+          <div style={{ marginTop: '1.5rem' }}>
+            <a href="/" style={{ fontSize: '0.85rem', color: SAGE, textDecoration: 'none' }}>← Back to shop</a>
           </div>
         </div>
       </div>
@@ -130,325 +107,109 @@ const CheckoutPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#E8E6E1]">
-      {/* Header */}
-      <header className="bg-white border-b border-[#2C3539]/10 py-6">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between">
-            <a href="/" className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-[#2C3539] flex items-center justify-center">
-                <span className="text-xl font-black text-white">K</span>
-              </div>
-              <h1 className="text-2xl font-black text-[#2C3539]">KIJIVU</h1>
-            </a>
-            <div className="flex items-center gap-2">
-              <Lock className="w-4 h-4 text-[#87A96B]" />
-              <span className="text-sm font-medium text-[#2C3539]/60">Secure Checkout</span>
-            </div>
+    <div style={{ minHeight: '100vh', background: CREAM, fontFamily: "'Inter', sans-serif", color: INK }}>
+
+      {/* Nav */}
+      <nav style={{ padding: '1.25rem 3rem', borderBottom: `1px solid rgba(44,53,57,0.1)`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <a href="/" style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '1.5rem', textDecoration: 'none', color: INK }}>KIJIVU</a>
+        <span style={{ fontSize: '0.8rem', color: `rgba(44,53,57,0.5)`, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Checkout</span>
+      </nav>
+
+      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '4rem 2rem', display: 'grid', gridTemplateColumns: '1fr 400px', gap: '4rem', alignItems: 'start' }}>
+
+        {/* Left — form */}
+        <form onSubmit={handleSubmit}>
+          <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '2.5rem', marginBottom: '2.5rem' }}>Your Details</h1>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1.5rem' }}>
+            <Field label="Full Name"     value={form.name}  onChange={set('name')}  placeholder="Jane Wanjiru" />
+            <Field label="Phone Number"  type="tel" value={form.phone} onChange={set('phone')} placeholder="+254 7XX XXX XXX" />
           </div>
-        </div>
-      </header>
+          <Field label="Email Address" type="email" value={form.email} onChange={set('email')} placeholder="jane@example.com" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
-        <div className="mb-12">
-          <h1 className="text-5xl lg:text-6xl font-black text-[#2C3539] mb-4">
-            checkout
-          </h1>
-          <p className="text-lg text-[#2C3539]/70 font-medium">
-            Complete your order in a few simple steps
+          <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.75rem', margin: '2rem 0 1.5rem' }}>Delivery Address</h2>
+
+          <Field label="Street Address" value={form.address} onChange={set('address')} placeholder="123 Ngong Road, Karen" />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1.5rem' }}>
+            <Field label="City / Town" value={form.city} onChange={set('city')} placeholder="Nairobi" />
+            <Field label="Country" value={form.country} onChange={set('country')} options={[
+              { value: 'Kenya',  label: 'Kenya' },
+              { value: 'Uganda', label: 'Uganda' },
+            ]} />
+          </div>
+          <Field label="Order Notes" value={form.notes} onChange={set('notes')} placeholder="Any special instructions…" required={false} />
+
+          {errorMsg && (
+            <div style={{ background: BLUSH, padding: '1rem 1.25rem', marginBottom: '1.5rem', fontSize: '0.9rem', color: INK }}>
+              {errorMsg}
+            </div>
+          )}
+
+          <button type="submit" disabled={status === 'loading' || cart.length === 0}
+            style={{ width: '100%', padding: '1.1rem 2rem', fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.06em', cursor: cart.length === 0 ? 'not-allowed' : 'pointer', background: status === 'loading' ? SAGE : INK, color: 'white', border: `2px solid ${INK}`, boxShadow: `4px 4px 0 ${SAGE}`, transition: 'all 0.2s', opacity: cart.length === 0 ? 0.5 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+            {status === 'loading' ? 'Placing Order…' : <>Place Order <ArrowRight style={{ width: 16, height: 16 }} /></>}
+          </button>
+
+          <p style={{ marginTop: '1rem', fontSize: '0.78rem', color: `rgba(44,53,57,0.5)`, textAlign: 'center' }}>
+            We'll confirm your order and payment via WhatsApp within 24 hours.
           </p>
-        </div>
+        </form>
 
-        <div className="grid lg:grid-cols-3 gap-12">
-          {/* Left - Form */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Contact Information */}
-            <div className="bg-white p-8 space-y-6">
-              <h2 className="text-2xl font-black text-[#2C3539] flex items-center gap-3">
-                <User className="w-6 h-6" />
-                contact information
-              </h2>
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-black text-[#2C3539] mb-2 uppercase tracking-wide">
-                    First Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    className="w-full border-2 border-[#2C3539]/20 p-4 focus:border-[#87A96B] focus:outline-none transition-colors font-medium"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-black text-[#2C3539] mb-2 uppercase tracking-wide">
-                    Last Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    className="w-full border-2 border-[#2C3539]/20 p-4 focus:border-[#87A96B] focus:outline-none transition-colors font-medium"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-black text-[#2C3539] mb-2 uppercase tracking-wide">
-                  Email Address *
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full border-2 border-[#2C3539]/20 p-4 focus:border-[#87A96B] focus:outline-none transition-colors font-medium"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-black text-[#2C3539] mb-2 uppercase tracking-wide">
-                  Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  placeholder="+254 7XX XXX XXX"
-                  className="w-full border-2 border-[#2C3539]/20 p-4 focus:border-[#87A96B] focus:outline-none transition-colors font-medium"
-                  required
-                />
-              </div>
+        {/* Right — order summary */}
+        <div style={{ position: 'sticky', top: '2rem' }}>
+          <div style={{ border: `1.5px solid rgba(44,53,57,0.12)`, background: CANVAS }}>
+            <div style={{ padding: '1.5rem 1.75rem', borderBottom: `1px solid rgba(44,53,57,0.1)`, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <ShoppingBag style={{ width: 18, height: 18 }} />
+              <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                Order Summary ({cart.length} item{cart.length !== 1 ? 's' : ''})
+              </span>
             </div>
 
-            {/* Delivery Information */}
-            <div className="bg-white p-8 space-y-6">
-              <h2 className="text-2xl font-black text-[#2C3539] flex items-center gap-3">
-                <MapPin className="w-6 h-6" />
-                delivery information
-              </h2>
-
-              <div>
-                <label className="block text-sm font-black text-[#2C3539] mb-2 uppercase tracking-wide">
-                  Location *
-                </label>
-                <select
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="w-full border-2 border-[#2C3539]/20 p-4 focus:border-[#87A96B] focus:outline-none transition-colors font-medium bg-white"
-                  required
-                >
-                  <option value="">Select your location</option>
-                  <option value="nairobi-cbd">Nairobi CBD (KES 200)</option>
-                  <option value="nairobi-suburbs">Nairobi Suburbs (KES 350)</option>
-                  <option value="nairobi-other">Other Nairobi Areas (KES 500)</option>
-                  <option value="kampala">Kampala, Uganda (KES 1,000)</option>
-                  <option value="other">Other Location (Contact for Quote)</option>
-                </select>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-black text-[#2C3539] mb-2 uppercase tracking-wide">
-                    County/Region *
-                  </label>
-                  <input
-                    type="text"
-                    name="county"
-                    value={formData.county}
-                    onChange={handleInputChange}
-                    className="w-full border-2 border-[#2C3539]/20 p-4 focus:border-[#87A96B] focus:outline-none transition-colors font-medium"
-                    required
-                  />
+            <div style={{ padding: '1.5rem 1.75rem' }}>
+              {cart.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+                  <p style={{ color: `rgba(44,53,57,0.5)`, fontSize: '0.9rem', marginBottom: '1rem' }}>Your cart is empty.</p>
+                  <a href="/#shop" style={{ fontSize: '0.85rem', color: SAGE, textDecoration: 'none' }}>← Back to shop</a>
                 </div>
-                <div>
-                  <label className="block text-sm font-black text-[#2C3539] mb-2 uppercase tracking-wide">
-                    Town/City *
-                  </label>
-                  <input
-                    type="text"
-                    name="town"
-                    value={formData.town}
-                    onChange={handleInputChange}
-                    className="w-full border-2 border-[#2C3539]/20 p-4 focus:border-[#87A96B] focus:outline-none transition-colors font-medium"
-                    required
-                  />
-                </div>
-              </div>
+              ) : (
+                <>
+                  {cart.map((item, i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', marginBottom: '1.25rem', paddingBottom: '1.25rem', borderBottom: `1px dotted rgba(44,53,57,0.12)` }}>
+                      <div style={{ flex: 1 }}>
+                        <p style={{ fontSize: '0.88rem', fontWeight: 500, lineHeight: 1.3, marginBottom: '0.25rem' }}>{item.name}</p>
+                        <p style={{ fontSize: '0.72rem', color: `rgba(44,53,57,0.5)` }}>Qty: {item.qty || 1}</p>
+                      </div>
+                      <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap' }}>
+                        KES {item.price.toLocaleString()}
+                      </span>
+                    </div>
+                  ))}
 
-              <div>
-                <label className="block text-sm font-black text-[#2C3539] mb-2 uppercase tracking-wide">
-                  Delivery Address *
-                </label>
-                <textarea
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className="w-full border-2 border-[#2C3539]/20 p-4 focus:border-[#87A96B] focus:outline-none transition-colors font-medium resize-none"
-                  placeholder="Building name, apartment number, street, landmarks..."
-                  required
-                />
-              </div>
-
-              {location === 'other' && (
-                <div className="bg-[#F4C7C3]/20 border-2 border-[#F4C7C3] p-4 flex items-start gap-3">
-                  <AlertCircle className="w-5 h-5 text-[#F4C7C3] flex-shrink-0 mt-0.5" />
-                  <p className="text-sm font-medium text-[#2C3539]">
-                    For locations outside our standard delivery zones, our team will contact you via WhatsApp (+254 705 016 590) to confirm delivery fee and timeline.
-                  </p>
-                </div>
+                  <div style={{ paddingTop: '0.5rem' }}>
+                    {[
+                      { label: 'Subtotal', val: `KES ${subtotal.toLocaleString()}` },
+                      { label: 'Delivery', val: `KES ${DELIVERY_FEE.toLocaleString()}` },
+                    ].map(({ label, val }) => (
+                      <div key={label} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', fontSize: '0.85rem', color: `rgba(44,53,57,0.65)` }}>
+                        <span>{label}</span><span>{val}</span>
+                      </div>
+                    ))}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '1rem', borderTop: `1.5px solid ${INK}`, fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '1.1rem' }}>
+                      <span>Total</span>
+                      <span>KES {total.toLocaleString()}</span>
+                    </div>
+                  </div>
+                </>
               )}
             </div>
-
-            {/* Payment Method */}
-            <div className="bg-white p-8 space-y-6">
-              <h2 className="text-2xl font-black text-[#2C3539] flex items-center gap-3">
-                <CreditCard className="w-6 h-6" />
-                payment method
-              </h2>
-
-              <div className="space-y-4">
-                <div className="border-2 border-[#87A96B] bg-[#87A96B]/5 p-6">
-                  <div className="flex items-center gap-4">
-                    <CreditCard className="w-8 h-8 text-[#2C3539]" />
-                    <div className="flex-1">
-                      <p className="font-black text-[#2C3539]">SECURE PAYMENT VIA STRIPE</p>
-                      <p className="text-sm text-[#2C3539]/60 font-medium">Cards & M-Pesa accepted</p>
-                    </div>
-                    <div className="bg-[#87A96B] text-white px-3 py-1 text-xs font-black">
-                      RECOMMENDED
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 bg-[#87A96B]/10 p-4">
-                    <p className="text-sm font-medium text-[#2C3539]">
-                      ✓ All payment methods accepted (Cards + M-Pesa)
-                      <br />
-                      ✓ Secure checkout on next page
-                      <br />
-                      ✓ Bank-level encryption
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-[#87A96B]/10 p-4 flex items-start gap-3">
-                <Lock className="w-5 h-5 text-[#87A96B] flex-shrink-0 mt-0.5" />
-                <p className="text-sm font-medium text-[#2C3539]">
-                  All payments are secured by <strong>Stripe</strong> with bank-level 256-bit SSL encryption. M-Pesa and all major cards accepted.
-                </p>
-              </div>
-            </div>
           </div>
 
-          {/* Right - Order Summary */}
-          <div className="lg:col-span-1">
-            <div className="bg-white p-8 space-y-6 sticky top-6">
-              <h2 className="text-2xl font-black text-[#2C3539] flex items-center gap-3">
-                <ShoppingCart className="w-6 h-6" />
-                order summary
-              </h2>
-
-              {/* Cart Items */}
-              <div className="space-y-4 border-b-2 border-[#2C3539]/10 pb-6">
-                {cartItems.map(item => (
-                  <div key={item.id} className="flex gap-4">
-                    <img 
-                      src={item.image}
-                      alt={item.name}
-                      className="w-20 h-20 object-cover"
-                    />
-                    <div className="flex-1 space-y-2">
-                      <h3 className="font-bold text-sm text-[#2C3539] leading-tight">
-                        {item.name}
-                      </h3>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <button 
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="w-6 h-6 border border-[#2C3539]/20 flex items-center justify-center hover:bg-[#2C3539] hover:text-white transition-all"
-                          >
-                            -
-                          </button>
-                          <span className="text-sm font-black">{item.quantity}</span>
-                          <button 
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="w-6 h-6 border border-[#2C3539]/20 flex items-center justify-center hover:bg-[#2C3539] hover:text-white transition-all"
-                          >
-                            +
-                          </button>
-                        </div>
-                        <button 
-                          onClick={() => removeItem(item.id)}
-                          className="text-[#F4C7C3] hover:text-red-600 transition-colors"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                      <p className="text-sm font-black text-[#2C3539]">
-                        KES {(item.price * item.quantity).toLocaleString()}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Totals */}
-              <div className="space-y-3">
-                <div className="flex justify-between text-sm">
-                  <span className="text-[#2C3539]/60 font-medium">Subtotal</span>
-                  <span className="font-black text-[#2C3539]">KES {subtotal.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-[#2C3539]/60 font-medium">Delivery Fee</span>
-                  <span className="font-black text-[#2C3539]">
-                    {location && deliveryFee > 0 ? `KES ${deliveryFee.toLocaleString()}` : 'TBD'}
-                  </span>
-                </div>
-                <div className="border-t-2 border-[#2C3539]/10 pt-3 flex justify-between">
-                  <span className="text-lg font-black text-[#2C3539] uppercase">Total</span>
-                  <span className="text-2xl font-black text-[#87A96B]">
-                    KES {total.toLocaleString()}
-                  </span>
-                </div>
-              </div>
-
-              {/* Place Order Button */}
-              <button
-                onClick={handleSubmit}
-                disabled={isProcessing || !location || cartItems.length === 0}
-                className="w-full bg-[#2C3539] text-white py-5 font-black hover:bg-[#87A96B] transition-all flex items-center justify-center gap-3 group disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isProcessing ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    PROCESSING...
-                  </>
-                ) : (
-                  <>
-                    PROCEED TO PAYMENT
-                    <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-                  </>
-                )}
-              </button>
-
-              <p className="text-xs text-[#2C3539]/60 text-center font-medium">
-                Powered by Stripe • Accepts Cards & M-Pesa
-              </p>
-            </div>
+          <div style={{ marginTop: '1rem', padding: '1rem 1.25rem', background: `rgba(135,169,107,0.08)`, border: `1px solid rgba(135,169,107,0.25)`, fontSize: '0.8rem', color: `rgba(44,53,57,0.7)`, lineHeight: 1.6 }}>
+            <strong style={{ color: SAGE }}>Payment</strong> — After placing your order we'll send payment instructions via WhatsApp. We accept M-Pesa, Airtel Money & card.
           </div>
         </div>
+
       </div>
     </div>
   );
-};
-
-export default CheckoutPage;
+}
