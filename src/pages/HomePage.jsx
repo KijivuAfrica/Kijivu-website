@@ -1,418 +1,405 @@
-import React, { useState } from 'react';
-import { ShoppingCart, Menu, X, MessageCircle, ArrowRight, Star, Leaf, Shield, Heart } from 'lucide-react';
+import { useState } from 'react';
+import { ShoppingCart, MessageCircle, ArrowRight } from 'lucide-react';
 
-const HomePage = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cart, setCart] = useState([]);
+const INK    = '#2C3539';
+const SAGE   = '#87A96B';
+const BLUSH  = '#F4C7C3';
+const CANVAS = '#E8E6E1';
+const CREAM  = '#FDFBF7';
 
-  const products = [
-    {
-      id: 1,
-      name: "MaryRuth Peach Mango Liquid Hair Supplement",
-      price: 7499,
-      image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&h=500&fit=crop",
-      badge: "Best Seller",
-      category: "Hair Growth",
-      stock: "In Stock"
-    },
-    {
-      id: 2,
-      name: "MaryRuth Dragon Fruit Liquid Hair Supplement",
-      price: 7499,
-      image: "https://images.unsplash.com/photo-1620411284481-0b56a0c351e2?w=500&h=500&fit=crop",
-      badge: "Waitlist",
-      category: "Hair Growth",
-      stock: "Coming Soon"
-    },
-    {
-      id: 3,
-      name: "Kids Immunity Gummies",
-      price: 4000,
-      image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&h=500&fit=crop",
-      category: "Kids Health",
-      stock: "In Stock"
-    },
-    {
-      id: 4,
-      name: "Prenatal & Postnatal Gummies",
-      price: 5500,
-      image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&h=500&fit=crop",
-      category: "Maternal Health",
-      stock: "In Stock"
-    }
-  ];
+const EXTRUDED = {
+  textShadow: [1,2,3,4,5,6,7,8,9,10]
+    .map(n => `${n}px ${n}px 0 ${SAGE}`)
+    .join(', ') + `, 12px 12px 24px rgba(135,169,107,0.25)`,
+};
 
-  const benefits = [
-    { icon: Shield, title: "American Quality", desc: "Premium ingredients, clinically-backed" },
-    { icon: Leaf, title: "Bioavailable", desc: "Your body actually absorbs it" },
-    { icon: Heart, title: "African-Focused", desc: "Addressing our nutritional gaps" },
-    { icon: Star, title: "Real Results", desc: "Trusted by 500+ Kenyan women" }
-  ];
+const BTN_SOLID = {
+  display: 'inline-flex', alignItems: 'center', gap: 8,
+  padding: '0.9rem 2rem',
+  fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.82rem',
+  textTransform: 'uppercase', letterSpacing: '0.06em',
+  textDecoration: 'none', cursor: 'pointer',
+  background: INK, color: CREAM,
+  border: `2px solid ${INK}`,
+  boxShadow: `4px 4px 0 ${SAGE}`,
+  transition: 'box-shadow 0.2s, transform 0.2s',
+};
+
+const BTN_OUTLINE = {
+  ...BTN_SOLID,
+  background: 'transparent', color: INK,
+  boxShadow: `4px 4px 0 ${BLUSH}`,
+};
+
+const BTN_WHITE = {
+  ...BTN_SOLID,
+  background: 'white', color: SAGE,
+  border: '2px solid white',
+  boxShadow: `4px 4px 0 ${INK}`,
+};
+
+const BTN_OUTLINE_WHITE = {
+  ...BTN_SOLID,
+  background: 'transparent', color: 'white',
+  border: '2px solid white',
+  boxShadow: `4px 4px 0 ${INK}`,
+};
+
+const MARQUEE_TEXT = 'Premium Wellness \u00a0•\u00a0 Hair Growth \u00a0•\u00a0 Kids Health \u00a0•\u00a0 Maternal Health \u00a0•\u00a0 Delivered Kenya & Uganda \u00a0•\u00a0 ';
+
+const products = [
+  {
+    id: 1,
+    name: 'MaryRuth Peach Mango Liquid Hair Supplement',
+    price: 7499,
+    image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&h=600&fit=crop',
+    badge: 'Best Seller',
+    category: 'Hair Growth',
+    stock: 'In Stock',
+  },
+  {
+    id: 2,
+    name: 'MaryRuth Dragon Fruit Liquid Hair Supplement',
+    price: 7499,
+    image: 'https://images.unsplash.com/photo-1620411284481-0b56a0c351e2?w=500&h=600&fit=crop',
+    badge: 'Waitlist',
+    category: 'Hair Growth',
+    stock: 'Coming Soon',
+  },
+  {
+    id: 3,
+    name: 'Kids Immunity Gummies',
+    price: 4000,
+    image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&h=600&fit=crop',
+    category: 'Kids Health',
+    stock: 'In Stock',
+  },
+  {
+    id: 4,
+    name: 'Prenatal & Postnatal Gummies',
+    price: 5500,
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&h=600&fit=crop',
+    category: 'Maternal Health',
+    stock: 'In Stock',
+  },
+];
+
+const WHY_ROWS = [
+  ['Deficiency',  '70% of Kenyans are zinc deficient'],
+  ['Iron Deficit','36% of women lack essential iron'],
+  ['The Gap',     "Hair products can't fix nutritional deficits"],
+  ['Standard',    'Lustriva®, Biotin & bioavailable vitamins'],
+];
+
+export default function HomePage() {
+  const [cart, setCart]               = useState([]);
+  const [hoveredProduct, setHovered]  = useState(null);
+
+  const addToCart = (product) => {
+    if (product.stock === 'In Stock') setCart(c => [...c, product]);
+  };
 
   return (
-    <div className="min-h-screen bg-[#E8E6E1]">
-      {/* Header */}
-      <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-[#2C3539]/10">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <div className="flex justify-between items-center h-20">
-            {/* Logo */}
-            <a href="/" className="flex items-center space-x-4 group">
-              <div className="relative">
-                <div className="absolute inset-0 bg-[#87A96B] rounded-2xl blur-sm group-hover:blur-md transition-all"></div>
-                <div className="relative w-14 h-14 bg-[#2C3539] rounded-2xl flex items-center justify-center transform group-hover:rotate-6 transition-transform">
-                  <span className="text-2xl font-black text-white">K</span>
-                </div>
-              </div>
-              <div>
-                <h1 className="text-3xl font-black text-[#2C3539] tracking-tight">KIJIVU</h1>
-              </div>
+    <div style={{ minHeight: '100vh', fontFamily: "'Inter', sans-serif", background: CREAM, color: INK, overflowX: 'hidden' }}>
+
+      {/* ── NAV ── */}
+      <nav style={{
+        position: 'fixed', top: 0, width: '100%', zIndex: 100,
+        display: 'grid', gridTemplateColumns: '1fr auto 1fr',
+        alignItems: 'center', padding: '1.25rem 3rem',
+        background: 'rgba(253,251,247,0.92)', backdropFilter: 'blur(12px)',
+        borderBottom: `1px solid rgba(44,53,57,0.1)`,
+      }}>
+        <div className="nav-left" style={{ display: 'flex', gap: '2.5rem' }}>
+          <a href="#shop"  style={{ textDecoration: 'none', color: INK, fontSize: '0.8rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Shop</a>
+          <a href="#about" style={{ textDecoration: 'none', color: INK, fontSize: '0.8rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>About</a>
+        </div>
+        <a href="/" className="nav-center" style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '1.75rem', letterSpacing: '-0.02em', textDecoration: 'none', color: INK }}>
+          KIJIVU
+        </a>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '2rem', alignItems: 'center' }}>
+          <a href="https://wa.me/254705016590" target="_blank" rel="noopener noreferrer"
+             style={{ textDecoration: 'none', color: INK, fontSize: '0.8rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            Support
+          </a>
+          <button style={{ position: 'relative', background: 'none', border: 'none', cursor: 'pointer', padding: '0.25rem', color: INK }}>
+            <ShoppingCart style={{ width: 22, height: 22 }} />
+            {cart.length > 0 && (
+              <span style={{ position: 'absolute', top: -6, right: -6, background: BLUSH, color: INK, fontSize: '0.62rem', width: 18, height: 18, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
+                {cart.length}
+              </span>
+            )}
+          </button>
+        </div>
+      </nav>
+
+      {/* ── HERO ── */}
+      <section className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '55% 45%', minHeight: '100vh' }}>
+
+        {/* Left — extruded text on dark */}
+        <div className="hero-left" style={{
+          background: INK, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: '4rem', overflow: 'hidden', position: 'relative',
+        }}>
+          <div style={{ position: 'absolute', bottom: 0, right: 0, width: '40%', height: '30%', background: SAGE, opacity: 0.12 }} />
+          <div style={{ transform: 'rotate(-5deg)', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+            {['KIJI', 'VU'].map(word => (
+              <span key={word} style={{
+                ...EXTRUDED,
+                fontFamily: "'Syne', sans-serif", fontWeight: 800,
+                fontSize: 'clamp(5rem, 13vw, 15rem)', lineHeight: 0.85,
+                textTransform: 'uppercase', letterSpacing: '-0.04em',
+                color: '#fff', display: 'block',
+              }}>{word}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Right — editorial content */}
+        <div style={{
+          background: CANVAS, padding: '9rem 4rem 4rem',
+          display: 'flex', flexDirection: 'column', justifyContent: 'center',
+          borderLeft: `1px solid rgba(44,53,57,0.1)`,
+        }}>
+          <span style={{ fontSize: '0.68rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: SAGE, marginBottom: '1.5rem', display: 'block' }}>
+            Premium Wellness for African Women
+          </span>
+          <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 'clamp(2rem, 3.5vw, 3.5rem)', lineHeight: 1.1, marginBottom: '1.5rem', color: INK }}>
+            Nutritional science<br />
+            <em>for the modern</em><br />
+            African woman.
+          </h1>
+          <p style={{ fontSize: '0.95rem', maxWidth: '360px', marginBottom: '3rem', color: `rgba(44,53,57,0.7)`, lineHeight: 1.75 }}>
+            Premium American supplements with clinically-backed ingredients your body can actually absorb — delivered to your door in Kenya & Uganda.
+          </p>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <a href="#shop" style={{ ...BTN_SOLID, textDecoration: 'none' }}>
+              Shop Now <ArrowRight style={{ width: 15, height: 15 }} />
             </a>
-
-            {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center space-x-12">
-              <a href="#shop" className="text-[#2C3539] hover:text-[#87A96B] transition-colors text-base font-medium">shop</a>
-              <a href="#about" className="text-[#2C3539] hover:text-[#87A96B] transition-colors text-base font-medium">about</a>
-              <a href="https://wa.me/254705016590" target="_blank" rel="noopener noreferrer" className="text-[#2C3539] hover:text-[#87A96B] transition-colors text-base font-medium">
-                support
-              </a>
-              <button className="relative p-3 text-[#2C3539] hover:bg-[#87A96B]/10 rounded-xl transition-all">
-                <ShoppingCart className="w-6 h-6" />
-                {cart.length > 0 && (
-                  <span className="absolute top-1 right-1 bg-[#F4C7C3] text-[#2C3539] text-xs w-5 h-5 rounded-full flex items-center justify-center font-black">
-                    {cart.length}
-                  </span>
-                )}
-              </button>
-            </nav>
-
-            {/* Mobile Menu Button */}
-            <button 
-              className="md:hidden p-3 hover:bg-[#87A96B]/10 rounded-xl transition-all"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
-            </button>
+            <a href="https://wa.me/254705016590" target="_blank" rel="noopener noreferrer" style={{ ...BTN_OUTLINE, textDecoration: 'none' }}>
+              <MessageCircle style={{ width: 15, height: 15 }} /> WhatsApp
+            </a>
           </div>
-        </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-[#2C3539]/10">
-            <div className="px-6 py-6 space-y-4">
-              <a href="#shop" className="block text-[#2C3539] hover:text-[#87A96B] py-3 text-lg font-medium">shop</a>
-              <a href="#about" className="block text-[#2C3539] hover:text-[#87A96B] py-3 text-lg font-medium">about</a>
-              <a href="https://wa.me/254705016590" target="_blank" rel="noopener noreferrer" className="block text-[#87A96B] py-3 text-lg font-medium">
-                whatsapp support
-              </a>
-            </div>
-          </div>
-        )}
-      </header>
-
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 px-6 lg:px-12 bg-[#E8E6E1] relative overflow-hidden">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-            {/* Left Content */}
-            <div className="lg:col-span-7 space-y-8 lg:space-y-12">
-              <div className="space-y-6">
-                <div className="inline-block">
-                  <span className="bg-[#2C3539] text-white px-5 py-2 text-sm font-bold tracking-wide">
-                    PREMIUM WELLNESS
-                  </span>
-                </div>
-                
-                <h1 className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-[#2C3539] leading-[0.9] tracking-tight">
-                  premium
-                  <br />
-                  <span className="relative inline-block">
-                    wellness
-                    <svg className="absolute -bottom-4 left-0 w-full" viewBox="0 0 400 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2 15C102 5 298 5 398 15" stroke="#87A96B" strokeWidth="8" strokeLinecap="round"/>
-                    </svg>
-                  </span>
-                </h1>
-
-                <p className="text-2xl lg:text-3xl font-medium text-[#2C3539]/80 leading-snug max-w-2xl">
-                  for the modern
-                  <br />
-                  <span className="text-[#87A96B] font-bold">African woman</span>
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a 
-                  href="#shop"
-                  className="group bg-[#2C3539] text-white px-10 py-5 text-lg font-bold hover:bg-[#87A96B] transition-all flex items-center justify-center gap-3"
-                >
-                  start your wellness journey
-                  <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-                </a>
-              </div>
-
-              <div className="pt-8 border-t-2 border-[#2C3539]/10">
-                <p className="text-base text-[#2C3539]/60 italic font-light max-w-xl">
-                  "Work willingly at whatever you do, as though you were working for the Lord rather than for the people."
-                  <span className="block mt-1 not-italic font-medium">— Colossians 3:23</span>
-                </p>
-              </div>
-            </div>
-
-            {/* Right Image */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative">
-                <div className="absolute inset-0 bg-[#87A96B] translate-x-6 translate-y-6"></div>
-                <div className="relative overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=800&h=1000&fit=crop"
-                    alt="Beautiful African woman"
-                    className="w-full h-[600px] object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Bar */}
-      <section className="py-16 bg-[#2C3539]">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="text-center space-y-2">
-                <div className="flex items-center justify-center gap-2">
-                  <benefit.icon className="w-8 h-8 text-[#87A96B]" />
-                </div>
-                <h3 className="text-4xl lg:text-5xl font-black text-white">{benefit.title}</h3>
-                <p className="text-white/70 font-medium">{benefit.desc}</p>
+          {/* Stat strip */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', marginTop: '4rem', borderTop: `1px solid rgba(44,53,57,0.12)` }}>
+            {[
+              { val: '500+', label: 'Kenyan Women' },
+              { val: '4',    label: 'Formulas' },
+              { val: 'KE+UG', label: 'Delivery' },
+            ].map((stat, i) => (
+              <div key={i} style={{
+                padding: '1.5rem 1.25rem 0.75rem',
+                borderRight: i < 2 ? `1px solid rgba(44,53,57,0.12)` : 'none',
+                paddingLeft: i === 0 ? 0 : '1.25rem',
+              }}>
+                <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1.75rem', marginBottom: '0.2rem' }}>{stat.val}</div>
+                <div style={{ fontSize: '0.7rem', color: `rgba(44,53,57,0.5)`, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Products Section */}
-      <section id="shop" className="py-24 lg:py-32 px-6 lg:px-12 bg-[#E8E6E1]">
-        <div className="max-w-[1400px] mx-auto">
-          {/* Section Header */}
-          <div className="mb-20">
-            <h2 className="text-6xl lg:text-8xl font-black text-[#2C3539] leading-tight mb-6">
-              shop
-              <br />
-              premium
-              <br />
-              supplements
-            </h2>
-            <p className="text-xl lg:text-2xl text-[#2C3539]/70 font-medium max-w-2xl">
-              curated for your wellness,
-              <br />
-              backed by science
-            </p>
+      {/* ── MARQUEE ── */}
+      <div style={{ background: INK, padding: '1rem 0', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+        <div className="marquee-track">
+          {Array(10).fill(null).map((_, i) => (
+            <span key={i} style={{ fontFamily: "'Syne', sans-serif", textTransform: 'uppercase', fontWeight: 700, fontSize: '0.8rem', letterSpacing: '0.12em', color: CANVAS, paddingRight: '3rem' }}>
+              {MARQUEE_TEXT}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ── PRODUCTS ── */}
+      <section id="shop" style={{ padding: '6rem 0', background: CREAM }}>
+        <div style={{ padding: '0 4rem 3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: `1px solid rgba(44,53,57,0.1)` }}>
+          <div>
+            <span style={{ fontSize: '0.68rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: SAGE, display: 'block', marginBottom: '0.75rem' }}>Core Range</span>
+            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 'clamp(2.5rem, 4vw, 4rem)', lineHeight: 1 }}>Premium Supplements</h2>
           </div>
+          <a href="https://wa.me/254705016590" target="_blank" rel="noopener noreferrer" style={{ ...BTN_OUTLINE, textDecoration: 'none', fontSize: '0.75rem' }}>
+            Order via WhatsApp
+          </a>
+        </div>
 
-          {/* Product Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products.map((product) => (
-              <div key={product.id} className="group">
-                <div className="relative mb-6 overflow-hidden bg-white">
-                  <img 
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-80 object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                  />
-                  {product.badge && (
-                    <span className="absolute top-4 right-4 bg-[#2C3539] text-white px-4 py-2 text-xs font-black tracking-wide">
-                      {product.badge}
-                    </span>
-                  )}
-                  <span className={`absolute top-4 left-4 ${product.stock === "In Stock" ? "bg-[#87A96B]" : "bg-[#F4C7C3]"} text-white px-4 py-2 text-xs font-black`}>
-                    {product.stock}
+        <div className="product-grid-inner" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', borderBottom: `1px solid rgba(44,53,57,0.1)` }}>
+          {products.map((product, i) => (
+            <div
+              key={product.id}
+              className="product-card"
+              onMouseEnter={() => setHovered(product.id)}
+              onMouseLeave={() => setHovered(null)}
+              style={{
+                borderRight: i < 3 ? `1px solid rgba(44,53,57,0.1)` : 'none',
+                display: 'flex', flexDirection: 'column',
+                background: hoveredProduct === product.id ? CANVAS : CREAM,
+                transition: 'background 0.3s',
+              }}
+            >
+              {/* Image */}
+              <div style={{ aspectRatio: '3/4', overflow: 'hidden', position: 'relative' }}>
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="product-img"
+                />
+                {product.badge && (
+                  <span style={{ position: 'absolute', top: '1rem', right: '1rem', background: INK, color: CREAM, padding: '0.3rem 0.75rem', fontSize: '0.62rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                    {product.badge}
                   </span>
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-xs text-[#87A96B] font-black uppercase tracking-widest mb-2">
-                      {product.category}
-                    </p>
-                    <h3 className="text-xl font-bold text-[#2C3539] leading-tight">
-                      {product.name}
-                    </h3>
-                  </div>
-                  
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-sm text-[#2C3539]/60 font-medium">KES</span>
-                    <span className="text-3xl font-black text-[#2C3539]">
-                      {product.price.toLocaleString()}
-                    </span>
-                  </div>
+                )}
+              </div>
 
-                  <button className="w-full bg-[#2C3539] text-white py-4 font-bold hover:bg-[#87A96B] transition-all group-hover:translate-y-0 translate-y-1">
-                    {product.stock === "In Stock" ? "ADD TO CART" : "JOIN WAITLIST"}
+              {/* Info */}
+              <div style={{ padding: '1.75rem', borderTop: `1px solid rgba(44,53,57,0.1)`, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                  <span style={{ fontSize: '0.62rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: SAGE }}>{product.category}</span>
+                  <span style={{ fontSize: '0.62rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: product.stock === 'In Stock' ? SAGE : '#c47a6b' }}>{product.stock}</span>
+                </div>
+                <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.3rem', lineHeight: 1.25, marginBottom: '1.5rem', flexGrow: 1 }}>{product.name}</h3>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1.25rem', borderTop: `1px dotted rgba(44,53,57,0.15)` }}>
+                  <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1.15rem' }}>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 500 }}>KES </span>
+                    {product.price.toLocaleString()}
+                  </span>
+                  <button
+                    onClick={() => addToCart(product)}
+                    style={{
+                      fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.7rem',
+                      textTransform: 'uppercase', letterSpacing: '0.06em',
+                      padding: '0.55rem 1.1rem', cursor: 'pointer',
+                      background: hoveredProduct === product.id ? INK : 'transparent',
+                      color: hoveredProduct === product.id ? CREAM : INK,
+                      border: `1.5px solid ${INK}`,
+                      boxShadow: hoveredProduct === product.id ? `3px 3px 0 ${SAGE}` : 'none',
+                      transition: 'all 0.2s',
+                    }}
+                  >
+                    {product.stock === 'In Stock' ? 'Add' : 'Waitlist'}
                   </button>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── WHY SECTION ── */}
+      <section id="about" className="why-grid" style={{ display: 'grid', gridTemplateColumns: '55% 45%', background: INK, color: CANVAS }}>
+
+        {/* Left: content */}
+        <div style={{ padding: '6rem 4rem', borderRight: `1px solid rgba(232,230,225,0.1)` }}>
+          <span style={{ fontSize: '0.68rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: SAGE, display: 'block', marginBottom: '1.5rem' }}>The Science</span>
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', textTransform: 'uppercase', lineHeight: 0.9, marginBottom: '3rem', letterSpacing: '-0.03em' }}>
+            WHY<br />PREMIUM<br />MATTERS
+          </h2>
+
+          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '3rem' }}>
+            <tbody>
+              {WHY_ROWS.map(([label, value]) => (
+                <tr key={label}>
+                  <th style={{ padding: '1rem 1.5rem 1rem 0', borderBottom: `1px solid rgba(232,230,225,0.12)`, textAlign: 'left', fontSize: '0.75rem', fontWeight: 400, color: `rgba(232,230,225,0.45)`, width: '28%', verticalAlign: 'top' }}>{label}</th>
+                  <td style={{ padding: '1rem 0', borderBottom: `1px solid rgba(232,230,225,0.12)`, fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: '0.85rem', letterSpacing: '0.01em' }}>{value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <blockquote style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.45rem', lineHeight: 1.35, color: `rgba(232,230,225,0.82)`, fontStyle: 'italic', marginBottom: '0.5rem', maxWidth: '460px' }}>
+            "Work willingly at whatever you do, as though you were working for the Lord."
+          </blockquote>
+          <p style={{ fontSize: '0.78rem', color: `rgba(232,230,225,0.4)` }}>— Colossians 3:23</p>
+        </div>
+
+        {/* Right: image */}
+        <div style={{ position: 'relative', minHeight: 500, overflow: 'hidden' }}>
+          <img
+            src="https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=800&h=1000&fit=crop"
+            alt="Kijivu Wellness"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%) contrast(1.1)', mixBlendMode: 'luminosity', opacity: 0.6 }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: `rgba(135,169,107,0.1)` }} />
+          <div style={{ position: 'absolute', bottom: '1.5rem', left: '2rem', fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '12rem', lineHeight: 1, color: SAGE, opacity: 0.1, pointerEvents: 'none', userSelect: 'none' }}>K</div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section style={{ background: SAGE, padding: '6rem 4rem', color: 'white' }}>
+        <div style={{ maxWidth: '900px' }}>
+          <span style={{ fontSize: '0.68rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.65)', display: 'block', marginBottom: '1.5rem' }}>
+            Begin Your Journey
+          </span>
+          <h2 className="cta-title" style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 'clamp(3.5rem, 9vw, 10rem)', textTransform: 'uppercase', lineHeight: 0.88, marginBottom: '3rem', letterSpacing: '-0.04em' }}>
+            START<br />YOUR<br />WELLNESS
+          </h2>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <a href="#shop" style={{ ...BTN_WHITE, textDecoration: 'none' }}>
+              Shop Formulas <ArrowRight style={{ width: 15, height: 15 }} />
+            </a>
+            <a href="https://wa.me/254705016590" target="_blank" rel="noopener noreferrer" style={{ ...BTN_OUTLINE_WHITE, textDecoration: 'none' }}>
+              <MessageCircle style={{ width: 15, height: 15 }} /> WhatsApp Support
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Why Section */}
-      <section id="about" className="py-24 lg:py-32 px-6 lg:px-12 bg-white">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-            <div className="lg:sticky lg:top-32">
-              <h2 className="text-6xl lg:text-8xl font-black text-[#2C3539] leading-[0.9] mb-8">
-                why
-                <br />
-                premium
-                <br />
-                supplements
-                <br />
-                <span className="text-[#87A96B]">matter</span>
-              </h2>
-            </div>
-
-            <div className="space-y-8 text-lg lg:text-xl text-[#2C3539]/80 leading-relaxed">
-              <p className="text-2xl lg:text-3xl font-bold text-[#2C3539]">
-                We're not here to sell you cheap vitamins filled with fillers.
-              </p>
-              
-              <p>
-                <strong className="text-[#87A96B] font-black">70% of Kenyans are zinc deficient.</strong> <strong className="text-[#87A96B] font-black">36% of women lack essential iron.</strong> These are the exact nutrients your hair follicles need to grow.
-              </p>
-              
-              <p>
-                You can spend thousands on external hair products, but if your body doesn't have the nutrients to build healthy strands from within, you're fighting an uphill battle.
-              </p>
-              
-              <p>
-                Kijivu brings you premium American supplements with clinically-backed ingredients like <strong className="font-black">Lustriva®, Biotin, and bioavailable vitamins</strong> your body can actually absorb.
-              </p>
-
-              <div className="pt-8 border-t-2 border-[#87A96B]">
-                <p className="text-2xl font-black text-[#87A96B] italic">
-                  Real nutrition. Real results.
-                  <br />
-                  Real transformation.
-                </p>
-              </div>
-            </div>
-          </div>
+      {/* ── FOOTER ── */}
+      <footer className="footer-grid" style={{ background: INK, color: CANVAS, padding: '4rem', display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '4rem', borderTop: `1px solid rgba(232,230,225,0.08)` }}>
+        <div>
+          <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '2.5rem', display: 'block', marginBottom: '1rem', letterSpacing: '-0.02em' }}>KIJIVU</span>
+          <p style={{ fontSize: '0.85rem', color: `rgba(232,230,225,0.6)`, lineHeight: 1.65, maxWidth: 220 }}>
+            Premium wellness for the modern African woman. Kenya & Uganda.
+          </p>
+          <p style={{ fontSize: '0.72rem', color: `rgba(232,230,225,0.3)`, marginTop: '2rem', fontStyle: 'italic' }}>Colossians 3:23</p>
+          <p style={{ fontSize: '0.7rem', color: `rgba(232,230,225,0.3)`, marginTop: '1.5rem' }}>© 2026 Kijivu. All rights reserved.</p>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 lg:py-32 px-6 lg:px-12 bg-[#87A96B] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-[#2C3539] transform skew-x-12 translate-x-1/2"></div>
-        
-        <div className="max-w-[1400px] mx-auto relative z-10">
-          <div className="max-w-4xl">
-            <h2 className="text-6xl lg:text-8xl font-black text-white leading-[0.9] mb-8">
-              ready to
-              <br />
-              transform
-              <br />
-              your wellness
-              <br />
-              journey?
-            </h2>
-            
-            <p className="text-xl lg:text-2xl text-white/90 font-medium mb-12 max-w-2xl">
-              Join hundreds of East African women who've chosen to nourish their bodies from within.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a 
-                href="#shop"
-                className="group bg-white text-[#87A96B] px-10 py-5 text-lg font-black hover:bg-[#2C3539] hover:text-white transition-all flex items-center justify-center gap-3"
-              >
-                START YOUR WELLNESS JOURNEY
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-              </a>
-              
-              <a 
-                href="https://wa.me/254705016590"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-transparent border-4 border-white text-white px-10 py-5 text-lg font-black hover:bg-white hover:text-[#87A96B] transition-all flex items-center justify-center gap-3"
-              >
-                <MessageCircle className="w-6 h-6" />
-                CHAT ON WHATSAPP
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-[#2C3539] text-white py-16 px-6 lg:px-12">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="grid md:grid-cols-4 gap-12 mb-16">
-            <div className="space-y-6">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-[#87A96B] flex items-center justify-center">
-                  <span className="text-xl font-black text-white">K</span>
-                </div>
-                <h3 className="text-2xl font-black">KIJIVU</h3>
-              </div>
-              <p className="text-white/60 text-sm font-medium">
-                premium wellness for the
-                <br />
-                modern african woman
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-black mb-6 text-lg">SHOP</h4>
-              <ul className="space-y-3 text-white/70 text-sm font-medium">
-                <li><a href="#" className="hover:text-white transition-colors">hair growth</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">kids health</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">maternal health</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">all products</a></li>
+        <div className="footer-links-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+          {[
+            {
+              heading: 'Shop',
+              links: [
+                { label: 'Hair Growth', href: '#shop' },
+                { label: 'Kids Health', href: '#shop' },
+                { label: 'Maternal Health', href: '#shop' },
+                { label: 'All Products', href: '#shop' },
+              ],
+            },
+            {
+              heading: 'Support',
+              links: [
+                { label: 'FAQs', href: '#' },
+                { label: 'Delivery Info', href: '#' },
+                { label: 'Returns', href: '#' },
+                { label: 'Contact Us', href: 'https://wa.me/254705016590' },
+              ],
+            },
+            {
+              heading: 'Connect',
+              links: [
+                { label: '+254 705 016 590', href: 'tel:+254705016590' },
+                { label: 'WhatsApp Support', href: 'https://wa.me/254705016590' },
+                { label: 'Kenya & Uganda', href: '#' },
+              ],
+            },
+          ].map(({ heading, links }) => (
+            <div key={heading}>
+              <h4 style={{ fontFamily: "'Syne', sans-serif", fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '1.5rem', fontWeight: 700 }}>{heading}</h4>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                {links.map(({ label, href }) => (
+                  <li key={label} style={{ marginBottom: '0.75rem' }}>
+                    <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                       style={{ textDecoration: 'none', color: `rgba(232,230,225,0.55)`, fontSize: '0.85rem', transition: 'color 0.2s' }}>
+                      {label}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
-
-            <div>
-              <h4 className="font-black mb-6 text-lg">SUPPORT</h4>
-              <ul className="space-y-3 text-white/70 text-sm font-medium">
-                <li><a href="#" className="hover:text-white transition-colors">faqs</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">delivery info</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">returns</a></li>
-                <li><a href="https://wa.me/254705016590" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">contact us</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-black mb-6 text-lg">CONNECT</h4>
-              <div className="space-y-4">
-                <a 
-                  href="https://wa.me/254705016590"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center text-white/70 hover:text-white transition-colors text-sm font-medium group"
-                >
-                  <MessageCircle className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
-                  whatsapp support
-                </a>
-                <p className="text-white/70 text-sm font-medium">
-                  +254 705 016 590
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-white/50 font-medium">
-            <p>&copy; 2026 kijivu. all rights reserved.</p>
-            <p className="mt-4 md:mt-0">
-              delivering premium wellness across kenya & uganda 🇰🇪 🇺🇬
-            </p>
-          </div>
+          ))}
         </div>
       </footer>
     </div>
   );
-};
-
-export default HomePage;
+}
