@@ -82,15 +82,7 @@ const ProductPage = () => {
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="flex justify-between items-center h-20">
             <a href="/" className="flex items-center space-x-4 group">
-              <div className="relative">
-                <div className="absolute inset-0 bg-[#87A96B] rounded-2xl blur-sm group-hover:blur-md transition-all"></div>
-                <div className="relative w-14 h-14 bg-[#2C3539] rounded-2xl flex items-center justify-center transform group-hover:rotate-6 transition-transform">
-                  <span className="text-2xl font-black text-white">K</span>
-                </div>
-              </div>
-              <div>
-                <h1 className="text-3xl font-black text-[#2C3539] tracking-tight">KIJIVU</h1>
-              </div>
+              <img src="/Kijivu Logo Design.png" alt="Kijivu" style={{ height: '48px', width: 'auto' }} />
             </a>
 
             <nav className="hidden md:flex items-center space-x-12">
@@ -403,10 +395,16 @@ const ProductPage = () => {
       {/* Footer */}
       <footer className="bg-[#2C3539] text-white py-16 px-6 lg:px-12">
         <div className="max-w-[1400px] mx-auto">
-          <div className="text-center">
-            <p className="text-white/60 text-sm font-medium">
-              &copy; 2026 kijivu. delivering premium wellness across kenya & uganda 🇰🇪 🇺🇬
-            </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-white/60 text-sm font-medium">
+                &copy; 2026 kijivu. delivering premium wellness across kenya & uganda 🇰🇪 🇺🇬
+              </p>
+            </div>
+            <div className="flex items-center gap-4">
+              <a href="https://www.tiktok.com/@Luke418free" target="_blank" rel="noopener noreferrer" className="text-white/90 font-bold hover:text-[#87A96B]">TikTok @Luke418free</a>
+              <a href="mailto:luke4182026@gmail.com" className="text-white/90 font-medium hover:text-[#87A96B]">Contact</a>
+            </div>
           </div>
         </div>
       </footer>
