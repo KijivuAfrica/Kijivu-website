@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Block admin page from indexing
+Disallow: /#/admin
+
+Sitemap: https://www.kijivuafrica.co.ke/sitemap.xml
