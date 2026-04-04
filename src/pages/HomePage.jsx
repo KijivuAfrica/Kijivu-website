@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
-const SHOPIFY_URL = 'YOUR_SHOPIFY_URL';
+const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/';
 
 // ── Brand tokens ──────────────────────────────────────────────────────────────
 const GREEN      = '#2E9E60';

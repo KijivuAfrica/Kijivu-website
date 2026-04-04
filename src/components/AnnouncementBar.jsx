@@ -1,6 +1,6 @@
 // AnnouncementBar — visibility controlled by App.jsx via localStorage
 
-const SHOPIFY_URL = 'YOUR_SHOPIFY_URL';
+const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/';
 
 export default function AnnouncementBar({ onDismiss }) {
   const dismiss = () => {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const SHOPIFY_URL = 'YOUR_SHOPIFY_URL';
+const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/';
 
 export default function TajiMobileBanner() {
   const [visible, setVisible] = useState(false);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const SHOPIFY_URL = 'YOUR_SHOPIFY_URL';
+const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/';
 
 const CrownIcon = () => (
   <svg width="36" height="28" viewBox="0 0 36 28" fill="none" style={{ display: 'block', margin: '0 auto' }}>
