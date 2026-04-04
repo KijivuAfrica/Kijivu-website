@@ -54,21 +54,11 @@ const products = [
     id: 6,
     name: 'Kijivu Original Formula',
     price: null,
-    image: 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=500&h=600&fit=crop',
+    image: '/nutraseller-manufacturing-3KsFrV7ySoQ-unsplash.jpg',
     badge: 'Coming Soon',
     category: 'Kijivu',
     description: 'Our own signature formula — developed in-house for the modern African woman. Launching soon.',
     comingSoon: true,
-  },
-  {
-    id: 7,
-    name: 'The Waiting Room — 30 Day Journal',
-    price: null,
-    image: '/nutraseller-manufacturing-3KsFrV7ySoQ-unsplash.jpg',
-    category: 'Books',
-    description: "A 30-day guided journal for people in transition seasons — reflections, prompts and space to process.",
-    buyLink: 'https://www.amazon.com/dp/B0GRQBC2JP',
-    freePdfLanding: true,
   },
 ];
 
@@ -96,10 +86,10 @@ export default function ShopPage({ cart = [], onAddToCart }) {
         boxSizing: 'border-box',
       }}>
         <div style={{ display: 'flex', gap: '2.5rem' }}>
-          <a href="#/" style={{ textDecoration: 'none', color: INK, fontSize: '0.8rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Home</a>
+          <a href="/" style={{ textDecoration: 'none', color: INK, fontSize: '0.8rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Home</a>
           <a href="https://wa.me/254705016590" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: INK, fontSize: '0.8rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Support</a>
         </div>
-        <a href="#/" style={{ textDecoration: 'none' }}>
+        <a href="/" style={{ textDecoration: 'none' }}>
           <img src="/Kijivu Logo Design.png" alt="Kijivu" style={{ height: '48px', width: 'auto' }} />
         </a>
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '2rem', alignItems: 'center' }}>

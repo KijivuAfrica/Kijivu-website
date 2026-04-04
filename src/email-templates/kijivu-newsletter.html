@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>{{ subject|default('Your Kijivu Update') }}</title>
+  <style>
+    /* ── RESET ── */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; outline: none; text-decoration: none; }
+    body { margin: 0 !important; padding: 0 !important; background-color: #eeedf2; }
+
+    /* ── GOOGLE FONTS ── */
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@700;800&display=swap');
+
+    /* ── MOBILE ── */
+    @media only screen and (max-width: 600px) {
+      .email-container { width: 100% !important; }
+      .hero-title { font-size: 48px !important; }
+      .section-pad { padding: 40px 24px !important; }
+      .product-cell { display: block !important; width: 100% !important; }
+      .btn { display: block !important; text-align: center !important; }
+      .stat-cell { display: block !important; width: 50% !important; float: left; box-sizing: border-box; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background-color:#eeedf2;">
+
+  <!-- PREVIEW TEXT -->
+  <div style="display:none;font-size:1px;color:#eeedf2;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
+    {{ preview_text|default('Your wellness update from Kijivu.') }} &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+  </div>
+
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#eeedf2;">
+    <tr>
+      <td align="center" style="padding:20px 0;">
+
+        <!-- EMAIL WRAPPER -->
+        <table class="email-container" role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;width:100%;">
+
+          <!-- ══ HEADER / NAV ══ -->
+          <tr>
+            <td style="background-color:#0d1b2a;padding:20px 40px;" align="center">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="center">
+                    <a href="https://www.kijivuafrica.co.ke/" target="_blank">
+                      <img src="https://www.kijivuafrica.co.ke/Kijivu Logo Design.png" alt="Kijivu" width="120" style="display:block;max-width:120px;" />
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style="padding-top:16px;">
+                    <a href="https://www.kijivuafrica.co.ke/#/shop" target="_blank" style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(232,230,225,0.6);text-decoration:none;margin:0 16px;">Shop</a>
+                    <a href="https://www.kijivuafrica.co.ke/#/about" target="_blank" style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(232,230,225,0.6);text-decoration:none;margin:0 16px;">About</a>
+                    <a href="https://wa.me/254705016590" target="_blank" style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(232,230,225,0.6);text-decoration:none;margin:0 16px;">WhatsApp</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ══ SAGE DIVIDER ══ -->
+          <tr>
+            <td style="background-color:#87A96B;padding:10px 0;" align="center">
+              <p style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:white;margin:0;">
+                Premium Wellness &nbsp;•&nbsp; Hair Growth &nbsp;•&nbsp; Kids Health &nbsp;•&nbsp; Maternal Health &nbsp;•&nbsp; For Every Woman
+              </p>
+            </td>
+          </tr>
+
+          <!-- ══ HERO ══ -->
+          <tr>
+            <td class="section-pad" style="background-color:#0d1b2a;padding:60px 40px 50px;" align="center">
+              <!-- Eyebrow -->
+              <p style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#87A96B;margin:0 0 16px;">
+                {{ eyebrow|default('From Kijivu') }}
+              </p>
+              <!-- Headline -->
+              <h1 class="hero-title" style="font-family:Georgia,'Times New Roman',serif;font-size:52px;font-weight:400;font-style:italic;color:#fafafa;line-height:1.05;margin:0 0 24px;letter-spacing:-0.01em;">
+                {{ headline|default('Your wellness journey starts here.') }}
+              </h1>
+              <!-- Subtext -->
+              <p style="font-family:Georgia,'Times New Roman',serif;font-size:16px;color:rgba(232,230,225,0.65);line-height:1.7;margin:0 0 36px;max-width:440px;font-style:italic;">
+                {{ subheadline|default('Clinically-backed supplements for women who deserve better. Delivered to your door.') }}
+              </p>
+              <!-- CTA Button -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
+                <tr>
+                  <td style="background-color:white;border:2px solid white;box-shadow:4px 4px 0 #0d1b2a;mso-border-shadow:yes;">
+                    <a href="{{ cta_url|default('https://www.kijivuafrica.co.ke/#/shop') }}" target="_blank"
+                      style="display:inline-block;padding:14px 32px;font-family:Arial,sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#87A96B;text-decoration:none;">
+                      {{ cta_text|default('Shop Now →') }}
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ══ BODY CONTENT ══ -->
+          <tr>
+            <td class="section-pad" style="background-color:#fafafa;padding:50px 40px;" align="left">
+              <p style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#87A96B;margin:0 0 12px;">
+                {{ section_label|default('This Week') }}
+              </p>
+              <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:30px;font-weight:400;font-style:italic;color:#0d1b2a;line-height:1.2;margin:0 0 20px;">
+                {{ body_headline|default('Something worth reading.') }}
+              </h2>
+              <p style="font-family:Arial,sans-serif;font-size:14px;color:rgba(13,27,42,0.7);line-height:1.8;margin:0 0 16px;">
+                {{ body_paragraph_1|default('Hi {{ first_name|default("there") }}, here is your update from Kijivu. We are constantly working to bring you the best clinically-backed wellness products — chosen specifically because the mainstream industry has ignored too many of us for too long.') }}
+              </p>
+              <p style="font-family:Arial,sans-serif;font-size:14px;color:rgba(13,27,42,0.7);line-height:1.8;margin:0 0 28px;">
+                {{ body_paragraph_2|default('Whether you are on your first bottle or your fifth, we are glad you are here. As always, reply to this email or WhatsApp us directly — we read every message.') }}
+              </p>
+              <!-- Inline CTA -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="background-color:#0d1b2a;border:2px solid #0d1b2a;box-shadow:4px 4px 0 #87A96B;">
+                    <a href="{{ body_cta_url|default('https://www.kijivuafrica.co.ke/#/shop') }}" target="_blank"
+                      style="display:inline-block;padding:12px 28px;font-family:Arial,sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#fafafa;text-decoration:none;">
+                      {{ body_cta_text|default('Browse Products →') }}
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ══ PRODUCT SPOTLIGHT (repeat block) ══ -->
+          <tr>
+            <td style="background-color:#eeedf2;padding:0 0 2px;" align="center">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td style="background-color:#fafafa;padding:40px 40px 8px;">
+                    <p style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#87A96B;margin:0 0 10px;">Featured Products</p>
+                    <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:400;font-style:italic;color:#0d1b2a;margin:0 0 30px;">The supplements<br /><em>your body is missing</em></h2>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Product Row -->
+          <tr>
+            <td style="background-color:#fafafa;padding:0 40px 40px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <!-- Product 1 -->
+                  <td class="product-cell" width="50%" style="padding-right:12px;vertical-align:top;" align="left">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                      <tr>
+                        <td style="border-bottom:3px solid #87A96B;">
+                          <img src="https://www.kijivuafrica.co.ke/IMG_5502%20(1).JPG" alt="MaryRuth Peach Mango Hair Supplement" width="100%" style="display:block;width:100%;max-width:240px;" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding:16px 0 8px;">
+                          <p style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#87A96B;margin:0 0 6px;">Hair Growth · Best Seller</p>
+                          <p style="font-family:Georgia,'Times New Roman',serif;font-size:15px;color:#0d1b2a;margin:0 0 8px;line-height:1.3;">MaryRuth Peach Mango Liquid Hair Supplement</p>
+                          <p style="font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#0d1b2a;margin:0 0 12px;"><span style="font-size:10px;font-weight:400;">KES </span>7,499</p>
+                          <a href="https://www.kijivuafrica.co.ke/#/shop" target="_blank"
+                            style="display:inline-block;padding:9px 18px;font-family:Arial,sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#0d1b2a;text-decoration:none;border:1.5px solid #0d1b2a;">
+                            Add to Cart →
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <!-- Product 2 -->
+                  <td class="product-cell" width="50%" style="padding-left:12px;vertical-align:top;" align="left">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                      <tr>
+                        <td style="border-bottom:3px solid #87A96B;">
+                          <img src="https://www.kijivuafrica.co.ke/IMG_4905.JPG" alt="Prenatal & Postnatal Gummies" width="100%" style="display:block;width:100%;max-width:240px;" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding:16px 0 8px;">
+                          <p style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#87A96B;margin:0 0 6px;">Maternal Health</p>
+                          <p style="font-family:Georgia,'Times New Roman',serif;font-size:15px;color:#0d1b2a;margin:0 0 8px;line-height:1.3;">Prenatal &amp; Postnatal Gummies</p>
+                          <p style="font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#0d1b2a;margin:0 0 12px;"><span style="font-size:10px;font-weight:400;">KES </span>5,500</p>
+                          <a href="https://www.kijivuafrica.co.ke/#/shop" target="_blank"
+                            style="display:inline-block;padding:9px 18px;font-family:Arial,sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#0d1b2a;text-decoration:none;border:1.5px solid #0d1b2a;">
+                            Add to Cart →
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ══ STAT BAND ══ -->
+          <tr>
+            <td style="background-color:#0d1b2a;padding:40px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td class="stat-cell" width="25%" align="center" style="padding:12px 8px;border-right:1px solid rgba(232,230,225,0.1);">
+                    <p style="font-family:Arial,sans-serif;font-size:18px;font-weight:700;color:#87A96B;margin:0 0 4px;">Next-day</p>
+                    <p style="font-family:Arial,sans-serif;font-size:9px;color:rgba(232,230,225,0.5);text-transform:uppercase;letter-spacing:0.06em;margin:0;">Dispatch</p>
+                  </td>
+                  <td class="stat-cell" width="25%" align="center" style="padding:12px 8px;border-right:1px solid rgba(232,230,225,0.1);">
+                    <p style="font-family:Arial,sans-serif;font-size:18px;font-weight:700;color:#87A96B;margin:0 0 4px;">50%</p>
+                    <p style="font-family:Arial,sans-serif;font-size:9px;color:rgba(232,230,225,0.5);text-transform:uppercase;letter-spacing:0.06em;margin:0;">Deposit Only</p>
+                  </td>
+                  <td class="stat-cell" width="25%" align="center" style="padding:12px 8px;border-right:1px solid rgba(232,230,225,0.1);">
+                    <p style="font-family:Arial,sans-serif;font-size:18px;font-weight:700;color:#87A96B;margin:0 0 4px;">WhatsApp</p>
+                    <p style="font-family:Arial,sans-serif;font-size:9px;color:rgba(232,230,225,0.5);text-transform:uppercase;letter-spacing:0.06em;margin:0;">Order Easy</p>
+                  </td>
+                  <td class="stat-cell" width="25%" align="center" style="padding:12px 8px;">
+                    <p style="font-family:Arial,sans-serif;font-size:18px;font-weight:700;color:#87A96B;margin:0 0 4px;">1-to-1</p>
+                    <p style="font-family:Arial,sans-serif;font-size:9px;color:rgba(232,230,225,0.5);text-transform:uppercase;letter-spacing:0.06em;margin:0;">Founder Follow-up</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ══ WHATSAPP BANNER ══ -->
+          <tr>
+            <td style="background-color:#25D366;padding:28px 40px;" align="center">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center">
+                    <p style="font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:white;margin:0 0 16px;">Prefer to order on WhatsApp? We're here.</p>
+                    <a href="https://wa.me/254705016590?text=Hi%20Kijivu!%20I'd%20like%20to%20place%20an%20order." target="_blank"
+                      style="display:inline-block;padding:12px 28px;font-family:Arial,sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#25D366;text-decoration:none;background-color:#0d1b2a;border:2px solid #0d1b2a;">
+                      Message Us →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ══ SCRIPTURE ══ -->
+          <tr>
+            <td style="background-color:#eeedf2;padding:50px 40px;" align="center">
+              <div style="width:32px;height:2px;background-color:#87A96B;margin:0 auto 28px;"></div>
+              <blockquote style="font-family:Georgia,'Times New Roman',serif;font-size:20px;font-style:italic;color:#0d1b2a;line-height:1.5;margin:0 0 16px;">
+                "Work willingly at whatever you do, as though you were working for the Lord."
+              </blockquote>
+              <p style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#87A96B;margin:0;">Colossians 3:23</p>
+              <div style="width:32px;height:2px;background-color:#87A96B;margin:28px auto 0;"></div>
+            </td>
+          </tr>
+
+          <!-- ══ FOOTER ══ -->
+          <tr>
+            <td style="background-color:#0d1b2a;padding:32px 40px;" align="center">
+              <a href="https://www.kijivuafrica.co.ke/" target="_blank">
+                <img src="https://www.kijivuafrica.co.ke/Kijivu Logo Design.png" alt="Kijivu" width="80" style="display:block;margin:0 auto 20px;" />
+              </a>
+              <p style="font-family:Arial,sans-serif;font-size:11px;color:rgba(232,230,225,0.5);line-height:1.7;margin:0 0 16px;">
+                Wellness for every woman. Especially those the industry forgot.<br />
+                Kenya &amp; Uganda &nbsp;•&nbsp; kijivuafrica.co.ke
+              </p>
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
+                <tr>
+                  <td style="padding:0 12px;">
+                    <a href="https://www.instagram.com/kijivu_/" target="_blank" style="font-family:Arial,sans-serif;font-size:10px;color:rgba(232,230,225,0.4);text-decoration:none;text-transform:uppercase;letter-spacing:0.06em;">Instagram</a>
+                  </td>
+                  <td style="padding:0 12px;">
+                    <a href="https://www.tiktok.com/@kijivu_" target="_blank" style="font-family:Arial,sans-serif;font-size:10px;color:rgba(232,230,225,0.4);text-decoration:none;text-transform:uppercase;letter-spacing:0.06em;">TikTok</a>
+                  </td>
+                  <td style="padding:0 12px;">
+                    <a href="https://wa.me/254705016590" target="_blank" style="font-family:Arial,sans-serif;font-size:10px;color:rgba(232,230,225,0.4);text-decoration:none;text-transform:uppercase;letter-spacing:0.06em;">WhatsApp</a>
+                  </td>
+                  <td style="padding:0 12px;">
+                    <a href="{{ unsubscribe_url }}" style="font-family:Arial,sans-serif;font-size:10px;color:rgba(232,230,225,0.4);text-decoration:none;text-transform:uppercase;letter-spacing:0.06em;">Unsubscribe</a>
+                  </td>
+                </tr>
+              </table>
+              <p style="font-family:Arial,sans-serif;font-size:9px;color:rgba(232,230,225,0.2);margin:20px 0 0;">
+                © 2026 Kijivu. All rights reserved.<br />
+                You are receiving this because you signed up at kijivuafrica.co.ke.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- END EMAIL WRAPPER -->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

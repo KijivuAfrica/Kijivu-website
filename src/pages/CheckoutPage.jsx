@@ -313,7 +313,7 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
               {cart.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '2rem 0' }}>
                   <p style={{ color: `rgba(44,53,57,0.5)`, fontSize: '0.9rem', marginBottom: '1rem' }}>Your cart is empty.</p>
-                  <a href="#/shop" style={{ fontSize: '0.85rem', color: SAGE, textDecoration: 'none' }}>← Back to shop</a>
+                  <a href="/shop" style={{ fontSize: '0.85rem', color: SAGE, textDecoration: 'none' }}>← Back to shop</a>
                 </div>
               ) : (
                 <>
