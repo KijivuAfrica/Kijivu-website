@@ -1,6 +1,8 @@
 // AnnouncementBar — visibility controlled by App.jsx via localStorage
-
 const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/';
+
+const GREEN_DARK = '#1A5C3A';
+const SANS       = "'Montserrat', sans-serif";
 
 export default function AnnouncementBar({ onDismiss }) {
   const dismiss = () => {
@@ -11,7 +13,7 @@ export default function AnnouncementBar({ onDismiss }) {
   return (
     <div style={{
       position: 'relative',
-      background: '#1A5C3A',
+      background: GREEN_DARK,
       height: 40,
       display: 'flex',
       alignItems: 'center',
@@ -19,24 +21,25 @@ export default function AnnouncementBar({ onDismiss }) {
       zIndex: 200,
     }}>
       <p style={{
-        fontFamily: "'Montserrat', sans-serif",
-        fontWeight: 300,
-        fontSize: 12,
-        letterSpacing: '0.08em',
-        color: '#9FE1CB',
+        fontFamily: SANS,
+        fontWeight: 400,
+        fontSize: 11,
+        letterSpacing: '0.1em',
+        color: 'rgba(253,251,247,0.75)',
         margin: 0,
         textAlign: 'center',
         padding: '0 2.5rem',
       }}>
-        TAJI presale now open, ships August 2026, reserve yours at{' '}
+        TAJI presale now open, ships August 2026. Reserve yours at{' '}
         <a
           href={SHOPIFY_URL}
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: '#ffffff', textDecoration: 'underline', fontWeight: 300 }}
+          style={{ color: '#9FE1CB', textDecoration: 'underline', fontWeight: 400 }}
         >
           $36
         </a>
+        {' '}— US and Canada only.
       </p>
       <button
         onClick={dismiss}
@@ -49,8 +52,8 @@ export default function AnnouncementBar({ onDismiss }) {
           background: 'none',
           border: 'none',
           cursor: 'pointer',
-          color: '#9FE1CB',
-          fontSize: 16,
+          color: 'rgba(253,251,247,0.35)',
+          fontSize: 14,
           lineHeight: 1,
           padding: '2px 4px',
         }}

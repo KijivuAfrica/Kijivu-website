@@ -12,7 +12,8 @@ import AboutPage from './pages/AboutPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import AnnouncementBar from './components/AnnouncementBar';
 import TajiMobileBanner from './components/TajiMobileBanner';
-import TajiPresalePopup from './components/TajiPresalePopup';
+import KijivuNav from './components/KijivuNav';
+import KijivuRegionPopup from './components/KijivuRegionPopup';
 
 function RouteTracker() {
   const location = useLocation();
@@ -20,15 +21,6 @@ function RouteTracker() {
     trackMeta('PageView');
   }, [location.pathname]);
   return null;
-}
-
-function HomeWithPopup({ cart, onAddToCart }) {
-  return (
-    <>
-      <TajiPresalePopup />
-      <HomePage cart={cart} onAddToCart={onAddToCart} />
-    </>
-  );
 }
 
 function App() {
@@ -61,16 +53,18 @@ function App() {
     <Router>
       <RouteTracker />
       {!barDismissed && <AnnouncementBar onDismiss={() => setBarDismissed(true)} />}
+      <KijivuNav cart={cart} topOffset={barDismissed ? 0 : 40} />
+      <KijivuRegionPopup />
       <TajiMobileBanner />
       <Routes>
-        <Route path="/"        element={<HomeWithPopup cart={cart} onAddToCart={addToCart} />} />
-        <Route path="/product/:id" element={<ProductPage cart={cart} onAddToCart={addToCart} />} />
-        <Route path="/checkout"    element={<CheckoutPage cart={cart} onClearCart={clearCart} />} />
-        <Route path="/shop"            element={<ShopPage cart={cart} onAddToCart={addToCart} />} />
-        <Route path="/about"           element={<AboutPage cart={cart} />} />
-        <Route path="/admin"           element={<AdminDashboard />} />
+        <Route path="/"             element={<HomePage cart={cart} onAddToCart={addToCart} />} />
+        <Route path="/product/:id"  element={<ProductPage cart={cart} onAddToCart={addToCart} />} />
+        <Route path="/checkout"     element={<CheckoutPage cart={cart} onClearCart={clearCart} />} />
+        <Route path="/shop"         element={<ShopPage cart={cart} onAddToCart={addToCart} />} />
+        <Route path="/about"        element={<AboutPage cart={cart} />} />
+        <Route path="/admin"        element={<AdminDashboard />} />
         <Route path="/payment-complete" element={<PaymentCompletePage />} />
-        <Route path="/privacy" element={<PrivacyPolicyPage />} />
+        <Route path="/privacy"      element={<PrivacyPolicyPage />} />
       </Routes>
     </Router>
   );

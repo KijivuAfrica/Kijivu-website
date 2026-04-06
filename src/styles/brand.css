@@ -1,0 +1,116 @@
+:root {
+  --k-green-dark:  #1A5C3A;
+  --k-green-mid:   #2E9E60;
+  --k-green-light: #E1F5EE;
+  --k-green-mint:  #9FE1CB;
+  --k-cream:       #FDFBF7;
+  --k-cream-card:  #F8F4EE;
+  --k-ink:         #1C1C1A;
+  --k-muted:       #5C5C58;
+  --k-border:      rgba(28, 28, 26, 0.12);
+  --font-display:  'Cinzel', serif;
+  --font-serif:    'EB Garamond', serif;
+  --font-sans:     'Montserrat', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--k-cream);
+  color: var(--k-ink);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--k-ink);
+  letter-spacing: 0.02em;
+}
+
+p, li, blockquote {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--k-muted);
+}
+
+a {
+  color: var(--k-green-mid);
+  text-decoration: none;
+}
+
+a:hover { text-decoration: underline; }
+
+.k-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--k-green-mid);
+}
+
+.k-btn-primary {
+  display: inline-block;
+  padding: 13px 24px;
+  background: var(--k-green-mid);
+  color: var(--k-cream);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s ease;
+  text-decoration: none;
+}
+
+.k-btn-primary:hover {
+  background: var(--k-green-dark);
+  text-decoration: none;
+}
+
+.k-btn-secondary {
+  display: inline-block;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--k-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid var(--k-border);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s ease;
+  text-decoration: none;
+}
+
+.k-btn-secondary:hover {
+  border-color: var(--k-green-mid);
+  text-decoration: none;
+}
+
+.k-card {
+  background: var(--k-cream-card);
+  border: 0.5px solid var(--k-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.k-section {
+  padding: 4rem 1.5rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.k-divider {
+  height: 0.5px;
+  background: var(--k-border);
+  margin: 0;
+}

@@ -1,14 +1,14 @@
-const INK    = '#2C3539';
-const SAGE   = '#87A96B';
-const CANVAS = '#E8E6E1';
+const INK    = '#1C1C1A';
+const SAGE   = '#2E9E60';
+const CANVAS = '#F8F4EE';
 const CREAM  = '#FDFBF7';
 
 const Section = ({ title, children }) => (
   <div style={{ marginBottom: '3rem' }}>
-    <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: INK, marginBottom: '1rem', paddingBottom: '0.75rem', borderBottom: `2px solid ${SAGE}` }}>
+    <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: INK, marginBottom: '1rem', paddingBottom: '0.75rem', borderBottom: `2px solid ${SAGE}` }}>
       {title}
     </h2>
-    <div style={{ fontSize: '0.92rem', lineHeight: 1.85, color: `rgba(44,53,57,0.8)` }}>
+    <div style={{ fontSize: '0.92rem', lineHeight: 1.85, color: `rgba(28,28,26,0.8)` }}>
       {children}
     </div>
   </div>
@@ -16,21 +16,21 @@ const Section = ({ title, children }) => (
 
 export default function PrivacyPolicyPage() {
   return (
-    <div style={{ minHeight: '100vh', background: CREAM, fontFamily: "'Inter', sans-serif", color: INK }}>
+    <div style={{ minHeight: '100vh', background: CREAM, fontFamily: "'Montserrat', sans-serif", color: INK }}>
 
-      <nav style={{ padding: '1.25rem 3rem', borderBottom: `1px solid rgba(44,53,57,0.1)`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <nav style={{ padding: '1.25rem 3rem', borderBottom: `1px solid rgba(28,28,26,0.1)`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <a href="/" style={{ textDecoration: 'none' }}>
           <img src="/Kijivu Logo Design.png" alt="Kijivu" style={{ height: '40px', width: 'auto' }} />
         </a>
-        <a href="/" style={{ fontSize: '0.82rem', color: `rgba(44,53,57,0.5)`, textDecoration: 'none' }}>← Back to Home</a>
+        <a href="/" style={{ fontSize: '0.82rem', color: `rgba(28,28,26,0.5)`, textDecoration: 'none' }}>← Back to Home</a>
       </nav>
 
       <div style={{ maxWidth: 760, margin: '0 auto', padding: '5rem 2rem' }}>
 
         <div style={{ marginBottom: '4rem' }}>
           <p style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: SAGE, marginBottom: '1rem' }}>Legal</p>
-          <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '3rem', lineHeight: 1.15, marginBottom: '1rem' }}>Privacy Policy</h1>
-          <p style={{ fontSize: '0.85rem', color: `rgba(44,53,57,0.5)` }}>Last updated: March 2026</p>
+          <h1 style={{ fontFamily: "'EB Garamond', serif", fontSize: '3rem', lineHeight: 1.15, marginBottom: '1rem' }}>Privacy Policy</h1>
+          <p style={{ fontSize: '0.85rem', color: `rgba(28,28,26,0.5)` }}>Last updated: March 2026</p>
         </div>
 
         <Section title="Who We Are">
@@ -85,7 +85,7 @@ export default function PrivacyPolicyPage() {
               { name: 'Supabase', purpose: 'Secure order data storage', link: 'https://supabase.com/privacy' },
               { name: 'WhatsApp (Meta)', purpose: 'Order communication and customer support', link: 'https://www.whatsapp.com/legal/privacy-policy' },
             ].map(({ name, purpose, link }) => (
-              <div key={name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', paddingBottom: '1rem', borderBottom: `1px solid rgba(44,53,57,0.08)` }}>
+              <div key={name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', paddingBottom: '1rem', borderBottom: `1px solid rgba(28,28,26,0.08)` }}>
                 <div>
                   <p style={{ fontWeight: 600, marginBottom: '0.2rem' }}>{name}</p>
                   <p style={{ fontSize: '0.82rem', opacity: 0.65 }}>{purpose}</p>
@@ -121,9 +121,9 @@ export default function PrivacyPolicyPage() {
         </Section>
 
         <div style={{ marginTop: '4rem', padding: '2rem', background: CANVAS, textAlign: 'center' }}>
-          <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.2rem', marginBottom: '0.75rem' }}>Questions about your privacy?</p>
+          <p style={{ fontFamily: "'EB Garamond', serif", fontSize: '1.2rem', marginBottom: '0.75rem' }}>Questions about your privacy?</p>
           <a href="https://wa.me/254705016590" target="_blank" rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '0.85rem 2rem', fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.06em', textDecoration: 'none', background: SAGE, color: 'white' }}>
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '0.85rem 2rem', fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.06em', textDecoration: 'none', background: SAGE, color: 'white' }}>
             Chat with us on WhatsApp
           </a>
         </div>

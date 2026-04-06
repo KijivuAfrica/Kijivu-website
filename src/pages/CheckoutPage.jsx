@@ -3,27 +3,27 @@ import { supabase } from '../lib/supabase';
 import { trackMeta } from '../lib/metaPixel';
 import { ArrowRight, ShoppingBag, CheckCircle, Smartphone, Clock, Info } from 'lucide-react';
 
-const INK    = '#2C3539';
-const SAGE   = '#87A96B';
-const CANVAS = '#E8E6E1';
+const INK    = '#1C1C1A';
+const SAGE   = '#2E9E60';
+const CANVAS = '#F8F4EE';
 const CREAM  = '#FDFBF7';
-const BLUSH  = '#F4C7C3';
+const BLUSH  = '#E1F5EE';
 
 const Field = ({ label, type = 'text', value, onChange, placeholder, required = true, options }) => (
   <div style={{ marginBottom: '1.5rem' }}>
-    <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: `rgba(44,53,57,0.6)`, marginBottom: '0.5rem' }}>
+    <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: `rgba(28,28,26,0.6)`, marginBottom: '0.5rem' }}>
       {label}{required && <span style={{ color: SAGE }}> *</span>}
     </label>
     {options ? (
       <select value={value} onChange={e => onChange(e.target.value)}
-        style={{ width: '100%', padding: '0.85rem 1rem', border: `1.5px solid rgba(44,53,57,0.2)`, background: CREAM, color: INK, fontSize: '0.95rem', fontFamily: 'inherit', outline: 'none' }}>
+        style={{ width: '100%', padding: '0.85rem 1rem', border: `1.5px solid rgba(28,28,26,0.2)`, background: CREAM, color: INK, fontSize: '0.95rem', fontFamily: 'inherit', outline: 'none' }}>
         {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
       </select>
     ) : (
       <input
         type={type} value={value} onChange={e => onChange(e.target.value)}
         placeholder={placeholder} required={required}
-        style={{ width: '100%', padding: '0.85rem 1rem', border: `1.5px solid rgba(44,53,57,0.2)`, background: CREAM, color: INK, fontSize: '0.95rem', fontFamily: 'inherit', outline: 'none' }}
+        style={{ width: '100%', padding: '0.85rem 1rem', border: `1.5px solid rgba(28,28,26,0.2)`, background: CREAM, color: INK, fontSize: '0.95rem', fontFamily: 'inherit', outline: 'none' }}
       />
     )}
   </div>
@@ -126,15 +126,15 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
     );
 
     return (
-      <div style={{ minHeight: '100vh', background: CREAM, fontFamily: "'Inter', sans-serif", color: INK }}>
-        <nav style={{ padding: '1.25rem 3rem', borderBottom: `1px solid rgba(44,53,57,0.1)`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ minHeight: '100vh', background: CREAM, fontFamily: "'Montserrat', sans-serif", color: INK }}>
+        <nav style={{ padding: '1.25rem 3rem', borderBottom: `1px solid rgba(28,28,26,0.1)`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <a href="/" style={{ textDecoration: 'none' }}><img src="/Kijivu Logo Design.png" alt="Kijivu" style={{ height: '40px', width: 'auto' }} /></a>
         </nav>
 
         <div style={{ maxWidth: 580, margin: '0 auto', padding: '5rem 2rem', textAlign: 'center' }}>
           <CheckCircle style={{ width: 64, height: 64, color: SAGE, margin: '0 auto 2rem' }} />
-          <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '2.5rem', marginBottom: '0.75rem', color: INK }}>Order Placed!</h2>
-          <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.2rem', color: `rgba(44,53,57,0.7)`, marginBottom: '2.5rem', lineHeight: 1.5 }}>
+          <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, fontSize: '2.5rem', marginBottom: '0.75rem', color: INK }}>Order Placed!</h2>
+          <p style={{ fontFamily: "'EB Garamond', serif", fontSize: '1.2rem', color: `rgba(28,28,26,0.7)`, marginBottom: '2.5rem', lineHeight: 1.5 }}>
             {savedPayFull
               ? 'Pay the full amount via M-Pesa, then send us your confirmation on WhatsApp.'
               : 'Pay your 50% deposit via M-Pesa to confirm, then send us your confirmation on WhatsApp.'}
@@ -144,11 +144,11 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
           {savedPayFull ? (
             <div style={{ background: INK, color: CREAM, padding: '1.5rem', marginBottom: '1.5rem', textAlign: 'center' }}>
               <p style={{ fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.5, marginBottom: '0.5rem' }}>Pay in Full</p>
-              <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '1.5rem', color: SAGE }}>KES {savedSubtotal.toLocaleString()}</p>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, fontSize: '1.5rem', color: SAGE }}>KES {savedSubtotal.toLocaleString()}</p>
               <p style={{ fontSize: '0.75rem', opacity: 0.5, marginTop: '0.35rem' }}>No balance due on delivery</p>
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1px', background: `rgba(44,53,57,0.12)`, marginBottom: '1.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1px', background: `rgba(28,28,26,0.12)`, marginBottom: '1.5rem' }}>
               {[
                 { label: 'Order Total',  val: `KES ${savedSubtotal.toLocaleString()}`, sub: 'products only' },
                 { label: 'Pay Now',      val: `KES ${savedDeposit.toLocaleString()}`,  sub: '50% deposit', dark: true },
@@ -156,7 +156,7 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
               ].map(({ label, val, sub, dark }) => (
                 <div key={label} style={{ background: dark ? INK : CREAM, color: dark ? CREAM : INK, padding: '1.25rem 0.75rem', textAlign: 'center' }}>
                   <p style={{ fontSize: '0.58rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.55, marginBottom: '0.4rem' }}>{label}</p>
-                  <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '1rem', marginBottom: '0.2rem' }}>{val}</p>
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, fontSize: '1rem', marginBottom: '0.2rem' }}>{val}</p>
                   <p style={{ fontSize: '0.6rem', opacity: 0.5 }}>{sub}</p>
                 </div>
               ))}
@@ -164,7 +164,7 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
           )}
 
           {/* Delivery timing */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center', marginBottom: '1.75rem', fontSize: '0.8rem', color: `rgba(44,53,57,0.55)`, background: CANVAS, padding: '0.75rem 1.25rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center', marginBottom: '1.75rem', fontSize: '0.8rem', color: `rgba(28,28,26,0.55)`, background: CANVAS, padding: '0.75rem 1.25rem' }}>
             <Clock style={{ width: 14, height: 14, flexShrink: 0 }} />
             <span>
               Estimated delivery: <strong>{deliveryEta}</strong> once payment is confirmed.
@@ -173,26 +173,26 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
           </div>
 
           {/* M-Pesa instructions */}
-          <div style={{ background: CANVAS, border: `1.5px solid rgba(44,53,57,0.12)`, padding: '2rem', marginBottom: '2rem', textAlign: 'left' }}>
+          <div style={{ background: CANVAS, border: `1.5px solid rgba(28,28,26,0.12)`, padding: '2rem', marginBottom: '2rem', textAlign: 'left' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
               <Smartphone style={{ width: 20, height: 20, color: SAGE }} />
-              <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Pay KES {savedDeposit.toLocaleString()} via M-Pesa
               </span>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
-              <div style={{ background: CREAM, padding: '1rem', border: `1px solid rgba(44,53,57,0.1)` }}>
-                <p style={{ fontSize: '0.65rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: `rgba(44,53,57,0.5)`, marginBottom: '0.4rem' }}>Option 1 — Paybill</p>
-                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1rem', marginBottom: '0.2rem' }}>247247</p>
-                <p style={{ fontSize: '0.78rem', color: `rgba(44,53,57,0.6)` }}>Account: <strong>1990186537393</strong></p>
+              <div style={{ background: CREAM, padding: '1rem', border: `1px solid rgba(28,28,26,0.1)` }}>
+                <p style={{ fontSize: '0.65rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: `rgba(28,28,26,0.5)`, marginBottom: '0.4rem' }}>Option 1 — Paybill</p>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '1rem', marginBottom: '0.2rem' }}>247247</p>
+                <p style={{ fontSize: '0.78rem', color: `rgba(28,28,26,0.6)` }}>Account: <strong>1990186537393</strong></p>
               </div>
-              <div style={{ background: CREAM, padding: '1rem', border: `1px solid rgba(44,53,57,0.1)` }}>
-                <p style={{ fontSize: '0.65rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: `rgba(44,53,57,0.5)`, marginBottom: '0.4rem' }}>Option 2 — Send Money</p>
-                <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '1rem' }}>0705 016 590</p>
+              <div style={{ background: CREAM, padding: '1rem', border: `1px solid rgba(28,28,26,0.1)` }}>
+                <p style={{ fontSize: '0.65rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: `rgba(28,28,26,0.5)`, marginBottom: '0.4rem' }}>Option 2 — Send Money</p>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '1rem' }}>0705 016 590</p>
               </div>
             </div>
-            <p style={{ fontSize: '0.78rem', color: `rgba(44,53,57,0.55)`, lineHeight: 1.6 }}>
+            <p style={{ fontSize: '0.78rem', color: `rgba(28,28,26,0.55)`, lineHeight: 1.6 }}>
               {savedPayFull
                 ? 'After paying, tap WhatsApp below and send us your M-Pesa confirmation SMS.'
                 : `After paying, tap WhatsApp below and send us your M-Pesa SMS. Balance of KES ${savedBalance.toLocaleString()} + rider's delivery fee paid on arrival.`}
@@ -200,10 +200,10 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
           </div>
 
           <a href={`https://wa.me/254705016590?text=${waMessage}`} target="_blank" rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '1rem 2.5rem', fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.88rem', textTransform: 'uppercase', letterSpacing: '0.06em', textDecoration: 'none', background: SAGE, color: 'white', border: `2px solid ${SAGE}`, boxShadow: `4px 4px 0 ${INK}`, width: '100%', justifyContent: 'center', boxSizing: 'border-box' }}>
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '1rem 2.5rem', fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '0.88rem', textTransform: 'uppercase', letterSpacing: '0.06em', textDecoration: 'none', background: SAGE, color: 'white', border: `2px solid ${SAGE}`, boxShadow: `4px 4px 0 ${INK}`, width: '100%', justifyContent: 'center', boxSizing: 'border-box' }}>
             Confirm on WhatsApp <ArrowRight style={{ width: 16, height: 16 }} />
           </a>
-          <p style={{ marginTop: '0.75rem', fontSize: '0.75rem', color: `rgba(44,53,57,0.4)` }}>
+          <p style={{ marginTop: '0.75rem', fontSize: '0.75rem', color: `rgba(28,28,26,0.4)` }}>
             Opens WhatsApp with your order details pre-filled.
           </p>
 
@@ -217,11 +217,11 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
 
   // ── CHECKOUT FORM ──
   return (
-    <div style={{ minHeight: '100vh', background: CREAM, fontFamily: "'Inter', sans-serif", color: INK }}>
+    <div style={{ minHeight: '100vh', background: CREAM, fontFamily: "'Montserrat', sans-serif", color: INK }}>
 
-      <nav style={{ padding: '1.25rem 3rem', borderBottom: `1px solid rgba(44,53,57,0.1)`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <nav style={{ padding: '1.25rem 3rem', borderBottom: `1px solid rgba(28,28,26,0.1)`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <a href="/" style={{ textDecoration: 'none' }}><img src="/Kijivu Logo Design.png" alt="Kijivu" style={{ height: '40px', width: 'auto' }} /></a>
-        <span style={{ fontSize: '0.8rem', color: `rgba(44,53,57,0.5)`, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Checkout</span>
+        <span style={{ fontSize: '0.8rem', color: `rgba(28,28,26,0.5)`, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Checkout</span>
       </nav>
 
       {/* Policy banner */}
@@ -236,7 +236,7 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
 
         {/* Left — form */}
         <form onSubmit={handleSubmit}>
-          <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '2.5rem', marginBottom: '2.5rem' }}>Your Details</h1>
+          <h1 style={{ fontFamily: "'EB Garamond', serif", fontSize: '2.5rem', marginBottom: '2.5rem' }}>Your Details</h1>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1.5rem' }}>
             <Field label="Full Name"    value={form.name}  onChange={set('name')}  placeholder="Jane Wanjiru" />
@@ -244,7 +244,7 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
           </div>
           <Field label="Email Address" type="email" value={form.email} onChange={set('email')} placeholder="jane@example.com" required={false} />
 
-          <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.75rem', margin: '2rem 0 1.5rem' }}>Delivery Address</h2>
+          <h2 style={{ fontFamily: "'EB Garamond', serif", fontSize: '1.75rem', margin: '2rem 0 1.5rem' }}>Delivery Address</h2>
 
           <Field label="Street Address" value={form.address} onChange={set('address')} placeholder="123 Ngong Road, Karen" />
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1.5rem' }}>
@@ -259,7 +259,7 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
 
           {/* Payment option toggle */}
           <div style={{ marginBottom: '2rem' }}>
-            <p style={{ fontSize: '0.72rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: `rgba(44,53,57,0.6)`, marginBottom: '0.75rem' }}>
+            <p style={{ fontSize: '0.72rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: `rgba(28,28,26,0.6)`, marginBottom: '0.75rem' }}>
               Payment Option
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
@@ -272,11 +272,11 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
                     padding: '1rem', textAlign: 'left', cursor: 'pointer',
                     background: payFull === full ? INK : CREAM,
                     color:      payFull === full ? CREAM : INK,
-                    border:     payFull === full ? `2px solid ${INK}` : `1.5px solid rgba(44,53,57,0.2)`,
+                    border:     payFull === full ? `2px solid ${INK}` : `1.5px solid rgba(28,28,26,0.2)`,
                     boxShadow:  payFull === full ? `3px 3px 0 ${SAGE}` : 'none',
                     transition: 'all 0.2s',
                   }}>
-                  <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.35rem' }}>{label}</p>
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.35rem' }}>{label}</p>
                   <p style={{ fontSize: '0.72rem', opacity: payFull === full ? 0.65 : 0.5, lineHeight: 1.4 }}>{sub}</p>
                 </button>
               ))}
@@ -290,21 +290,21 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
           )}
 
           <button type="submit" disabled={status === 'loading' || cart.length === 0}
-            style={{ width: '100%', padding: '1.1rem 2rem', fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.06em', cursor: cart.length === 0 ? 'not-allowed' : 'pointer', background: status === 'loading' ? SAGE : INK, color: 'white', border: `2px solid ${INK}`, boxShadow: `4px 4px 0 ${SAGE}`, transition: 'all 0.2s', opacity: cart.length === 0 ? 0.5 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+            style={{ width: '100%', padding: '1.1rem 2rem', fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.06em', cursor: cart.length === 0 ? 'not-allowed' : 'pointer', background: status === 'loading' ? SAGE : INK, color: 'white', border: `2px solid ${INK}`, boxShadow: `4px 4px 0 ${SAGE}`, transition: 'all 0.2s', opacity: cart.length === 0 ? 0.5 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
             {status === 'loading' ? 'Placing Order…' : <>Place Order <ArrowRight style={{ width: 16, height: 16 }} /></>}
           </button>
 
-          <p style={{ marginTop: '1rem', fontSize: '0.78rem', color: `rgba(44,53,57,0.5)`, textAlign: 'center' }}>
+          <p style={{ marginTop: '1rem', fontSize: '0.78rem', color: `rgba(28,28,26,0.5)`, textAlign: 'center' }}>
             M-Pesa payment instructions shown after placing your order.
           </p>
         </form>
 
         {/* Right — order summary */}
         <div style={{ position: 'sticky', top: '2rem' }}>
-          <div style={{ border: `1.5px solid rgba(44,53,57,0.12)`, background: CANVAS }}>
-            <div style={{ padding: '1.5rem 1.75rem', borderBottom: `1px solid rgba(44,53,57,0.1)`, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ border: `1.5px solid rgba(28,28,26,0.12)`, background: CANVAS }}>
+            <div style={{ padding: '1.5rem 1.75rem', borderBottom: `1px solid rgba(28,28,26,0.1)`, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <ShoppingBag style={{ width: 18, height: 18 }} />
-              <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Order Summary ({cart.length} item{cart.length !== 1 ? 's' : ''})
               </span>
             </div>
@@ -312,28 +312,28 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
             <div style={{ padding: '1.5rem 1.75rem' }}>
               {cart.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-                  <p style={{ color: `rgba(44,53,57,0.5)`, fontSize: '0.9rem', marginBottom: '1rem' }}>Your cart is empty.</p>
+                  <p style={{ color: `rgba(28,28,26,0.5)`, fontSize: '0.9rem', marginBottom: '1rem' }}>Your cart is empty.</p>
                   <a href="/shop" style={{ fontSize: '0.85rem', color: SAGE, textDecoration: 'none' }}>← Back to shop</a>
                 </div>
               ) : (
                 <>
                   {cart.map((item, i) => (
-                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', marginBottom: '1.25rem', paddingBottom: '1.25rem', borderBottom: `1px dotted rgba(44,53,57,0.12)` }}>
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', marginBottom: '1.25rem', paddingBottom: '1.25rem', borderBottom: `1px dotted rgba(28,28,26,0.12)` }}>
                       <div style={{ flex: 1 }}>
                         <p style={{ fontSize: '0.88rem', fontWeight: 500, lineHeight: 1.3, marginBottom: '0.25rem' }}>{item.name}</p>
-                        <p style={{ fontSize: '0.72rem', color: `rgba(44,53,57,0.5)` }}>Qty: {item.qty || 1}</p>
+                        <p style={{ fontSize: '0.72rem', color: `rgba(28,28,26,0.5)` }}>Qty: {item.qty || 1}</p>
                       </div>
-                      <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap' }}>
+                      <span style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap' }}>
                         KES {item.price.toLocaleString()}
                       </span>
                     </div>
                   ))}
 
                   <div style={{ paddingTop: '0.5rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', fontSize: '0.85rem', color: `rgba(44,53,57,0.65)` }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', fontSize: '0.85rem', color: `rgba(28,28,26,0.65)` }}>
                       <span>Products Total</span><span>KES {subtotal.toLocaleString()}</span>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', fontSize: '0.78rem', color: `rgba(44,53,57,0.45)`, fontStyle: 'italic' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', fontSize: '0.78rem', color: `rgba(28,28,26,0.45)`, fontStyle: 'italic' }}>
                       <span>Delivery fee</span><span>paid to rider</span>
                     </div>
 
@@ -367,14 +367,14 @@ export default function CheckoutPage({ cart = [], onClearCart }) {
           </div>
 
           {/* M-Pesa preview */}
-          <div style={{ marginTop: '1rem', background: CANVAS, border: `1.5px solid rgba(44,53,57,0.12)`, padding: '1.25rem 1.5rem' }}>
+          <div style={{ marginTop: '1rem', background: CANVAS, border: `1.5px solid rgba(28,28,26,0.12)`, padding: '1.25rem 1.5rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
               <Smartphone style={{ width: 16, height: 16, color: SAGE }} />
-              <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 {payFull ? 'Full Payment' : 'Deposit'} — M-Pesa
               </span>
             </div>
-            <div style={{ fontSize: '0.8rem', color: `rgba(44,53,57,0.75)`, lineHeight: 1.7 }}>
+            <div style={{ fontSize: '0.8rem', color: `rgba(28,28,26,0.75)`, lineHeight: 1.7 }}>
               <p style={{ marginBottom: '0.5rem' }}><strong>Paybill:</strong> 247247<br /><strong>Account:</strong> 1990186537393</p>
               <p><strong>Or send to:</strong> 0705 016 590</p>
             </div>

@@ -2,17 +2,24 @@ import { useState, useEffect } from 'react';
 
 const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/';
 
+const CREAM  = '#FDFBF7';
+const INK    = '#1C1C1A';
+const MUTED  = '#5C5C58';
+const GREEN_DARK = '#1A5C3A';
+
+const DISPLAY = "'Cinzel', serif";
+const SERIF   = "'EB Garamond', serif";
+const SANS    = "'Montserrat', sans-serif";
+
 const CrownIcon = () => (
   <svg width="36" height="28" viewBox="0 0 36 28" fill="none" style={{ display: 'block', margin: '0 auto' }}>
-    <path
-      d="M2,24 L6,10 L13,18 L18,4 L23,18 L30,10 L34,24 Z"
-      stroke="#1A5C3A" strokeWidth="1.5" fill="none"
-      strokeLinejoin="round" strokeLinecap="round"
-    />
-    <line x1="2" y1="27" x2="34" y2="27" stroke="#1A5C3A" strokeWidth="1.5" />
-    <circle cx="18" cy="4"  r="1.5" fill="#1A5C3A" />
-    <circle cx="6"  cy="10" r="1.5" fill="#1A5C3A" />
-    <circle cx="30" cy="10" r="1.5" fill="#1A5C3A" />
+    <path d="M2,24 L6,10 L13,18 L18,4 L23,18 L30,10 L34,24 Z"
+      stroke={GREEN_DARK} strokeWidth="1.5" fill="none"
+      strokeLinejoin="round" strokeLinecap="round" />
+    <line x1="2" y1="27" x2="34" y2="27" stroke={GREEN_DARK} strokeWidth="1.5" />
+    <circle cx="18" cy="4"  r="1.5" fill={GREEN_DARK} />
+    <circle cx="6"  cy="10" r="1.5" fill={GREEN_DARK} />
+    <circle cx="30" cy="10" r="1.5" fill={GREEN_DARK} />
   </svg>
 );
 
@@ -42,7 +49,7 @@ export default function TajiPresalePopup() {
       onClick={close}
       style={{
         position: 'fixed', inset: 0, zIndex: 50,
-        background: 'rgba(42,17,24,0.45)',
+        background: 'rgba(28,28,26,0.5)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '1rem',
       }}
@@ -50,10 +57,10 @@ export default function TajiPresalePopup() {
       <div
         onClick={e => e.stopPropagation()}
         style={{
-          background: '#FDFBF7',
-          border: '1px solid rgba(42,17,24,0.10)',
+          background: CREAM,
+          border: `0.5px solid rgba(28,28,26,0.12)`,
           borderRadius: 12,
-          maxWidth: 400,
+          maxWidth: 380,
           width: '90vw',
           padding: '2rem',
           position: 'relative',
@@ -66,73 +73,69 @@ export default function TajiPresalePopup() {
           style={{
             position: 'absolute', top: 14, right: 16,
             background: 'none', border: 'none', cursor: 'pointer',
-            color: 'rgba(42,17,24,0.35)', fontSize: 18, lineHeight: 1,
+            color: MUTED, fontSize: 18, lineHeight: 1,
           }}
         >
           ✕
         </button>
 
         {/* Crown */}
-        <div style={{ marginBottom: '1rem' }}>
+        <div style={{ marginBottom: '1.25rem' }}>
           <CrownIcon />
         </div>
 
         {/* Eyebrow */}
-        <p style={{
-          fontFamily: "'Montserrat', sans-serif", fontWeight: 500,
-          fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase',
-          color: '#2E9E60', textAlign: 'center', margin: '0 0 0.6rem',
-        }}>
+        <p className="k-label" style={{ textAlign: 'center', marginBottom: '0.6rem' }}>
           Presale now open
         </p>
 
         {/* Headline */}
         <h2 style={{
-          fontFamily: "'EB Garamond', serif", fontStyle: 'italic',
-          fontSize: 22, color: '#2A1118', textAlign: 'center',
-          lineHeight: 1.3, margin: '0 0 0.85rem',
+          fontFamily: DISPLAY, fontWeight: 500, fontSize: 24,
+          color: INK, textAlign: 'center', lineHeight: 1.2, margin: '0 0 0.85rem',
         }}>
-          TAJI is ready for you.
+          TAJI
         </h2>
+
+        {/* Tagline */}
+        <p style={{
+          fontFamily: SERIF, fontStyle: 'italic', fontSize: 15,
+          color: MUTED, textAlign: 'center', margin: '0 0 1rem', lineHeight: 1.5,
+        }}>
+          Hair, approached at the root.
+        </p>
 
         {/* Body */}
         <p style={{
-          fontFamily: "'Montserrat', sans-serif", fontWeight: 300,
-          fontSize: 14, color: 'rgba(42,17,24,0.6)', textAlign: 'center',
-          lineHeight: 1.75, margin: '0 0 1.25rem',
+          fontFamily: SERIF, fontSize: 14, color: MUTED,
+          textAlign: 'center', lineHeight: 1.8, margin: '0 0 1.25rem',
         }}>
-          For women who've tried everything and still aren't getting answers.
-          Built around the biology most supplements overlook.
+          TAJI addresses the biological systems that govern hair health. Formulated for women whose root cause has been consistently overlooked.
         </p>
 
-        {/* Divider with label */}
+        {/* Divider */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '0 0 1.25rem' }}>
-          <div style={{ flex: 1, height: 0.5, background: 'rgba(42,17,24,0.12)' }} />
+          <div style={{ flex: 1, height: 0.5, background: 'rgba(28,28,26,0.1)' }} />
           <span style={{
-            fontFamily: "'Montserrat', sans-serif", fontWeight: 500,
-            fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase',
-            color: '#2E9E60',
+            fontFamily: SANS, fontWeight: 400, fontSize: 9,
+            letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED,
           }}>
             300 bottles, founder price
           </span>
-          <div style={{ flex: 1, height: 0.5, background: 'rgba(42,17,24,0.12)' }} />
+          <div style={{ flex: 1, height: 0.5, background: 'rgba(28,28,26,0.1)' }} />
         </div>
 
-        {/* Price row */}
+        {/* Price */}
         <div style={{
           display: 'flex', justifyContent: 'center', alignItems: 'baseline',
           gap: 8, margin: '0 0 1.25rem',
         }}>
-          <span style={{ fontFamily: "'EB Garamond', serif", fontSize: 28, color: '#1A5C3A', lineHeight: 1 }}>
-            $36
-          </span>
+          <span style={{ fontFamily: SERIF, fontSize: 28, color: INK, lineHeight: 1 }}>$36</span>
           <span style={{
-            fontFamily: "'Montserrat', sans-serif", fontSize: 14,
-            color: 'rgba(42,17,24,0.4)', textDecoration: 'line-through',
-          }}>
-            $40
-          </span>
-          <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(42,17,24,0.5)' }}>
+            fontFamily: SANS, fontWeight: 300, fontSize: 13,
+            color: 'rgba(28,28,26,0.3)', textDecoration: 'line-through',
+          }}>$40</span>
+          <span style={{ fontFamily: SANS, fontWeight: 300, fontSize: 11, color: MUTED }}>
             30-day supply
           </span>
         </div>
@@ -140,26 +143,35 @@ export default function TajiPresalePopup() {
         {/* CTA */}
         <button
           onClick={handleCTA}
-          style={{
-            width: '100%', background: '#2E9E60', color: '#FDFBF7',
-            fontFamily: "'Montserrat', sans-serif", fontWeight: 500,
-            fontSize: 14, padding: '13px', borderRadius: 8,
-            border: 'none', cursor: 'pointer', marginBottom: 8,
-            transition: 'background 0.2s',
-          }}
-          onMouseEnter={e => e.currentTarget.style.background = '#1A5C3A'}
-          onMouseLeave={e => e.currentTarget.style.background = '#2E9E60'}
+          className="k-btn-primary"
+          style={{ width: '100%', marginBottom: 10 }}
         >
           Reserve my bottle
         </button>
 
-        {/* Fine print */}
+        {/* US-only note */}
         <p style={{
-          fontFamily: "'Montserrat', sans-serif", fontSize: 11,
-          color: 'rgba(42,17,24,0.4)', textAlign: 'center', margin: 0,
+          fontFamily: SANS, fontWeight: 300, fontSize: 10, color: MUTED,
+          textAlign: 'center', margin: '0 0 12px', letterSpacing: '0.04em',
         }}>
-          Full refund before shipping, ships August 2026.
+          US and Canada orders only. Full refund before shipping, ships August 2026.
         </p>
+
+        {/* Not now */}
+        <div style={{ textAlign: 'center' }}>
+          <button
+            onClick={close}
+            style={{
+              background: 'none', border: 'none', cursor: 'pointer',
+              fontFamily: SANS, fontWeight: 300, fontSize: 11,
+              color: 'rgba(28,28,26,0.35)', letterSpacing: '0.06em',
+              textDecoration: 'underline',
+              textDecorationColor: 'rgba(28,28,26,0.15)',
+            }}
+          >
+            Not now
+          </button>
+        </div>
       </div>
     </div>
   );

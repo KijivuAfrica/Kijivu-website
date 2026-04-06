@@ -1,213 +1,183 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
+import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 
 const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/';
 
-// ── Brand tokens ──────────────────────────────────────────────────────────────
-const GREEN      = '#2E9E60';
-const FOREST     = '#1A5C3A';
-const BADGE_BG   = '#E1F5EE';
-const PAGE_BG    = '#FDFBF7';
-const CARD_BG    = '#F8F4EE';
-const BODY_TEXT  = '#1C1C1A';
+const CREAM      = '#FDFBF7';
+const CREAM_CARD = '#F8F4EE';
+const INK        = '#1C1C1A';
 const MUTED      = '#5C5C58';
-const MINT       = '#9FE1CB';
+const GREEN_MID  = '#2E9E60';
+const GREEN_DARK = '#1A5C3A';
+const GREEN_LIGHT = '#E1F5EE';
+const BORDER     = 'rgba(28,28,26,0.12)';
 
-// ── MRO products (kept exactly as before) ────────────────────────────────────
-const MRO_PRODUCTS = [
-  { id: 1, name: 'MaryRuth Peach Mango Liquid Hair Supplement', price: 7499, image: '/IMG_5502 (1).JPG', badge: 'Best Seller', category: 'Hair Growth' },
-  { id: 2, name: 'MaryRuth Dragon Fruit Liquid Hair Supplement', price: 7499, image: '/IMG_5505.JPG',     category: 'Hair Growth' },
-  { id: 3, name: 'Kids Immunity Gummies',                        price: 4000, image: '/IMG_4899.JPG',     category: 'Kids Health' },
-  { id: 4, name: 'Prenatal & Postnatal Gummies',                 price: 5500, image: '/IMG_4905.JPG',     category: 'Maternal Health' },
-  { id: 5, name: 'MaryRuth Daily Liquid Hair Support 500mg',     price: 7000, image: '/Hair Formula PICTURE.jpeg', category: 'Hair Growth' },
-];
+const DISPLAY = "'Cinzel', serif";
+const SERIF   = "'EB Garamond', serif";
+const SANS    = "'Montserrat', sans-serif";
 
-export default function HomePage({ cart = [], onAddToCart }) {
-  const [hoveredProduct, setHovered] = useState(null);
-  const [emailValue, setEmailValue]   = useState('');
-  const [emailSent, setEmailSent]     = useState(false);
-  const navigate = useNavigate();
+export default function HomePage() {
+  const [emailValue, setEmailValue] = useState('');
+  const [emailSent, setEmailSent]   = useState(false);
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     if (!emailValue) return;
-    await supabase.from('leads').insert({ email: emailValue, source: 'homepage_email_capture' });
+    try {
+      await supabase.from('leads').insert({ email: emailValue, source: 'homepage_email_capture' });
+      window.klaviyo?.push(['identify', { $email: emailValue }]);
+    } catch (_) {}
     setEmailSent(true);
   };
 
-  const scrollToMRO = (e) => {
+  const scrollToBrand = (e) => {
     e.preventDefault();
-    document.getElementById('mro-products')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('brand-statement')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: PAGE_BG, color: BODY_TEXT, overflowX: 'hidden' }}>
+    <div style={{ minHeight: '100vh', background: CREAM, color: INK, overflowX: 'hidden' }}>
 
-      {/* ── NAV ── */}
-      <nav style={{
-        position: 'fixed', top: 40, width: '100%', zIndex: 100,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '1rem 2rem',
-        background: 'rgba(253,251,247,0.95)', backdropFilter: 'blur(10px)',
-        borderBottom: `1px solid rgba(28,28,26,0.08)`,
-        boxSizing: 'border-box',
-      }}>
-        <a href="/" style={{ textDecoration: 'none' }}>
-          <img src="/Kijivu Logo Design.png" alt="Kijivu" style={{ height: 40, width: 'auto' }} />
-        </a>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-          <a href="/about" style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300, fontSize: 13, color: MUTED, textDecoration: 'none', letterSpacing: '0.04em' }}>About</a>
-          <a href="/shop"  style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300, fontSize: 13, color: MUTED, textDecoration: 'none', letterSpacing: '0.04em' }}>Shop</a>
-          <button
-            onClick={() => navigate('/checkout')}
-            style={{ position: 'relative', background: 'none', border: 'none', cursor: 'pointer', color: BODY_TEXT, padding: '2px' }}
-          >
-            <ShoppingCart style={{ width: 20, height: 20 }} />
-            {cart.length > 0 && (
-              <span style={{
-                position: 'absolute', top: -5, right: -5,
-                background: GREEN, color: '#fff',
-                fontSize: 10, width: 16, height: 16, borderRadius: '50%',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: "'Montserrat', sans-serif", fontWeight: 500,
-              }}>
-                {cart.length}
-              </span>
-            )}
-          </button>
-        </div>
-      </nav>
-
-      {/* ── SECTION 2: HERO ── */}
+      {/* ── HERO ── */}
       <section style={{
-        minHeight: '100vh', background: PAGE_BG,
+        minHeight: '100vh', background: CREAM,
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
-        textAlign: 'center', padding: '8rem 1.5rem 4rem',
-        paddingTop: 'calc(40px + 60px + 4rem)',
+        textAlign: 'center',
+        paddingTop: 'calc(40px + 60px + 3rem)',
+        paddingBottom: '4rem',
+        paddingLeft: '1.5rem', paddingRight: '1.5rem',
       }}>
-        <a href="/" style={{ display: 'inline-block', marginBottom: '2rem' }}>
-          <img src="/Kijivu Logo Design.png" alt="Kijivu" style={{ height: 72, width: 'auto' }} />
-        </a>
+        {/* Eyebrow */}
         <p style={{
-          fontFamily: "'EB Garamond', serif", fontStyle: 'italic',
-          fontSize: 20, color: MUTED, marginBottom: '2.5rem',
-          lineHeight: 1.5,
+          fontFamily: SANS, fontWeight: 500, fontSize: 11,
+          letterSpacing: '0.14em', textTransform: 'uppercase',
+          color: GREEN_MID, marginBottom: '0.75rem',
         }}>
-          Wellness rooted in science. Built for African women.
+          Kijivu
         </p>
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+
+        {/* TAJI wordmark */}
+        <h1 style={{
+          fontFamily: DISPLAY, fontWeight: 500,
+          fontSize: 'clamp(32px, 5vw, 52px)',
+          color: INK, letterSpacing: '0.04em',
+          lineHeight: 1, margin: '0 0 0.5rem',
+        }}>
+          TAJI
+        </h1>
+
+        {/* Divider */}
+        <div style={{ width: 40, height: 0.5, background: GREEN_MID, margin: '0.75rem auto 1.5rem' }} />
+
+        {/* Bottle image */}
+        <div style={{ width: '100%', maxWidth: 240, marginBottom: '2rem' }}>
+          <img
+            src="/taji-hero-editorial.png"
+            alt="TAJI by Kijivu, daily hair supplement"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+            onError={e => { e.currentTarget.style.display = 'none'; }}
+          />
+        </div>
+
+        {/* Tagline */}
+        <p style={{
+          fontFamily: SERIF, fontStyle: 'italic', fontSize: 20,
+          color: MUTED, marginBottom: '2.5rem', lineHeight: 1.5,
+        }}>
+          Hair, approached at the root.
+        </p>
+
+        {/* CTAs */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <a
             href={SHOPIFY_URL}
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              fontFamily: "'Montserrat', sans-serif", fontWeight: 500, fontSize: 14,
-              background: FOREST, color: '#ffffff',
-              borderRadius: 8, padding: '13px 24px',
-              textDecoration: 'none', letterSpacing: '0.02em',
-            }}
+            className="k-btn-primary"
           >
             Reserve TAJI, $36
           </a>
-          <a
-            href="#mro-products"
-            onClick={scrollToMRO}
-            style={{
-              fontFamily: "'Montserrat', sans-serif", fontWeight: 500, fontSize: 14,
-              background: 'transparent', color: BODY_TEXT,
-              border: `1px solid ${BODY_TEXT}`,
-              borderRadius: 8, padding: '13px 24px',
-              textDecoration: 'none', letterSpacing: '0.02em',
-            }}
+          <p style={{
+            fontFamily: SANS, fontWeight: 300, fontSize: 11,
+            color: MUTED, letterSpacing: '0.05em',
+          }}>
+            US and Canada orders only. Ships August 2026.
+          </p>
+          <button
+            onClick={scrollToBrand}
+            className="k-btn-secondary"
+            style={{ fontSize: 13, padding: '10px 20px' }}
           >
-            Shop MaryRuth
-          </a>
+            Learn more
+          </button>
         </div>
       </section>
 
-      {/* ── SECTION 3: TAJI FEATURE ── */}
-      <section style={{ background: PAGE_BG, padding: '5rem 2rem' }}>
-        <div style={{
-          maxWidth: 1040, margin: '0 auto',
-          display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '4rem', alignItems: 'center',
-        }}
+      {/* ── TAJI FEATURE ── */}
+      <section style={{ background: GREEN_DARK, padding: '5rem 2rem' }}>
+        <div
+          style={{
+            maxWidth: 1040, margin: '0 auto',
+            display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '4rem', alignItems: 'center',
+          }}
           className="taji-feature-grid"
         >
-          {/* Left: bottle image or placeholder */}
+          {/* Left: image / placeholder */}
           <div style={{
-            background: FOREST, borderRadius: 12,
-            minHeight: 480, display: 'flex',
-            alignItems: 'center', justifyContent: 'center',
+            borderRadius: 12, overflow: 'hidden',
+            background: GREEN_DARK,
+            border: `0.5px solid rgba(255,255,255,0.1)`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            aspectRatio: '1',
           }}>
-            {/* Replace src with actual bottle image when available */}
             <img
               src="/taji-hero-editorial.png"
               alt="TAJI by Kijivu"
-              onError={e => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'flex'; }}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 12 }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: 0.9 }}
+              onError={e => {
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextSibling.style.display = 'flex';
+              }}
             />
             <div style={{
-              display: 'none', width: '100%', height: '100%', minHeight: 480,
-              alignItems: 'center', justifyContent: 'center',
-              flexDirection: 'column', gap: 8,
+              display: 'none', alignItems: 'center', justifyContent: 'center',
+              width: '100%', height: '100%', borderRadius: 12,
+              background: GREEN_DARK,
             }}>
-              <span style={{
-                fontFamily: "'Cinzel', serif", fontWeight: 500,
-                fontSize: 48, color: MINT, letterSpacing: '0.12em',
-              }}>
+              <span style={{ fontFamily: DISPLAY, fontSize: 48, color: CREAM, letterSpacing: '0.06em' }}>
                 TAJI
-              </span>
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300, fontSize: 11, color: 'rgba(159,225,203,0.6)', letterSpacing: '0.18em', textTransform: 'uppercase' }}>
-                by Kijivu
               </span>
             </div>
           </div>
 
           {/* Right: copy */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            <span style={{
-              fontFamily: "'Montserrat', sans-serif", fontWeight: 500,
-              fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase',
-              color: GREEN,
-            }}>
-              Our hero product, presale now open
+            <span className="k-label" style={{ color: '#9FE1CB' }}>
+              Our hero product
             </span>
-
             <h2 style={{
-              fontFamily: "'Cinzel', serif", fontWeight: 500,
-              fontSize: 28, color: FOREST, lineHeight: 1.25, margin: 0,
+              fontFamily: DISPLAY, fontWeight: 500, fontSize: 32,
+              color: CREAM, lineHeight: 1.2, margin: 0,
             }}>
               TAJI by Kijivu
             </h2>
-
             <p style={{
-              fontFamily: "'EB Garamond', serif", fontStyle: 'italic',
-              fontSize: 18, color: MUTED, margin: 0,
+              fontFamily: SERIF, fontSize: 16, color: 'rgba(253,251,247,0.75)',
+              lineHeight: 1.85, margin: 0,
             }}>
-              Hair, approached at the root.
+              For women who have tried everything and still aren't getting answers. Built around the biology most supplements overlook.
             </p>
 
-            <p style={{
-              fontFamily: "'EB Garamond', serif", fontSize: 16,
-              color: MUTED, lineHeight: 1.8, margin: 0,
-            }}>
-              For women who've tried everything and still aren't getting answers.
-              TAJI was built around the biology most supplements overlook.
-              Rooted in the science of African women's wellness, formulated for
-              anyone dealing with the same root causes.
-            </p>
-
-            {/* Feature tags */}
+            {/* Badges */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {['Lustriva, hero ingredient', 'Iron absorption system', 'Stress shedding formula'].map(tag => (
+              {['Lustriva', 'Iron absorption system', 'Stress shedding formula'].map(tag => (
                 <span key={tag} style={{
-                  fontFamily: "'Montserrat', sans-serif", fontWeight: 500,
-                  fontSize: 11, background: BADGE_BG, color: FOREST,
-                  padding: '4px 10px', borderRadius: 4,
+                  fontFamily: SANS, fontWeight: 400, fontSize: 11,
+                  letterSpacing: '0.06em',
+                  background: GREEN_LIGHT, color: GREEN_DARK,
+                  padding: '4px 10px', borderRadius: 20,
                 }}>
                   {tag}
                 </span>
@@ -215,168 +185,64 @@ export default function HomePage({ cart = [], onAddToCart }) {
             </div>
 
             {/* Price */}
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
+              <span style={{ fontFamily: SERIF, fontSize: 28, color: CREAM, lineHeight: 1 }}>$36</span>
               <span style={{
-                fontFamily: "'Montserrat', sans-serif", fontSize: 14,
-                color: MUTED, textDecoration: 'line-through',
-              }}>
-                $40
-              </span>
-              <span style={{ fontFamily: "'EB Garamond', serif", fontSize: 24, color: FOREST }}>
-                $36 presale
+                fontFamily: SANS, fontWeight: 300, fontSize: 14,
+                color: 'rgba(253,251,247,0.4)', textDecoration: 'line-through',
+              }}>$40</span>
+              <span style={{ fontFamily: SANS, fontWeight: 300, fontSize: 12, color: 'rgba(253,251,247,0.5)' }}>
+                30-day supply
               </span>
             </div>
 
             {/* CTA */}
-            <a
-              href={SHOPIFY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'block', width: '100%', maxWidth: 280,
-                textAlign: 'center',
-                fontFamily: "'Montserrat', sans-serif", fontWeight: 500, fontSize: 15,
-                background: GREEN, color: '#ffffff',
-                borderRadius: 8, padding: 14,
-                textDecoration: 'none',
-              }}
-            >
-              Reserve my bottle, $36
-            </a>
-
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: MUTED, margin: 0 }}>
-              Full refund before shipping, ships August 2026.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 4: BRAND STATEMENT ── */}
-      <section style={{ padding: '4rem 1.5rem', background: PAGE_BG }}>
-        <div style={{ maxWidth: 640, margin: '0 auto' }}>
-          <p style={{
-            fontFamily: "'EB Garamond', serif", fontSize: 18,
-            lineHeight: 1.85, color: MUTED, marginBottom: '1.5rem',
-          }}>
-            Kijivu is a US-based wellness brand building clinically formulated
-            supplements for women of African descent, starting with East Africa
-            and the African diaspora.
-          </p>
-          <p style={{
-            fontFamily: "'EB Garamond', serif", fontSize: 18,
-            lineHeight: 1.85, color: MUTED, margin: 0,
-          }}>
-            TAJI was formulated around the nutritional gaps the wellness industry
-            has consistently overlooked. If iron deficiency, chronic stress, or
-            hormonal gaps are your root cause, the science works for you
-            regardless of your background.
-          </p>
-        </div>
-      </section>
-
-      {/* ── SECTION 5: MRO PRODUCTS ── */}
-      <div style={{ borderTop: `0.5px solid rgba(28,28,26,0.12)` }} />
-      <section id="mro-products" style={{ padding: '4rem 2rem 5rem', background: PAGE_BG }}>
-        <div style={{ maxWidth: 1040, margin: '0 auto' }}>
-          <p style={{
-            fontFamily: "'Montserrat', sans-serif", fontWeight: 300,
-            fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase',
-            color: MUTED, marginBottom: '2rem',
-          }}>
-            Also available
-          </p>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-            gap: '1.5rem',
-          }}>
-            {MRO_PRODUCTS.map(product => (
-              <div
-                key={product.id}
-                onMouseEnter={() => setHovered(product.id)}
-                onMouseLeave={() => setHovered(null)}
-                style={{
-                  background: hoveredProduct === product.id ? CARD_BG : '#fff',
-                  border: `1px solid rgba(28,28,26,0.08)`,
-                  borderRadius: 8, overflow: 'hidden',
-                  display: 'flex', flexDirection: 'column',
-                  transition: 'background 0.2s',
-                }}
+            <div>
+              <a
+                href={SHOPIFY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="k-btn-primary"
               >
-                <div style={{ aspectRatio: '3/4', overflow: 'hidden', position: 'relative' }}>
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s', transform: hoveredProduct === product.id ? 'scale(1.04)' : 'scale(1)' }}
-                  />
-                  {product.badge && (
-                    <span style={{
-                      position: 'absolute', top: 10, left: 10,
-                      background: BADGE_BG, color: FOREST,
-                      fontFamily: "'Montserrat', sans-serif", fontWeight: 500,
-                      fontSize: 10, padding: '3px 8px', borderRadius: 3,
-                      letterSpacing: '0.04em',
-                    }}>
-                      {product.badge}
-                    </span>
-                  )}
-                </div>
-                <div style={{ padding: '1rem', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                  <span style={{
-                    fontFamily: "'Montserrat', sans-serif", fontWeight: 300,
-                    fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em',
-                    color: GREEN, marginBottom: 6, display: 'block',
-                  }}>
-                    {product.category}
-                  </span>
-                  <h3 style={{
-                    fontFamily: "'EB Garamond', serif", fontSize: 15,
-                    lineHeight: 1.3, color: BODY_TEXT, flexGrow: 1, marginBottom: '1rem',
-                  }}>
-                    {product.name}
-                  </h3>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: `1px dotted rgba(28,28,26,0.12)`, paddingTop: '0.75rem' }}>
-                    <span style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300, fontSize: 13, color: BODY_TEXT }}>
-                      <span style={{ fontSize: 10 }}>KES </span>{product.price.toLocaleString()}
-                    </span>
-                    <button
-                      onClick={() => onAddToCart(product)}
-                      style={{
-                        fontFamily: "'Montserrat', sans-serif", fontWeight: 500,
-                        fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.04em',
-                        padding: '6px 12px', cursor: 'pointer',
-                        background: hoveredProduct === product.id ? FOREST : 'transparent',
-                        color: hoveredProduct === product.id ? '#fff' : BODY_TEXT,
-                        border: `1px solid ${hoveredProduct === product.id ? FOREST : 'rgba(28,28,26,0.2)'}`,
-                        borderRadius: 4,
-                        transition: 'all 0.2s',
-                      }}
-                    >
-                      Add
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+                Reserve my bottle, $36
+              </a>
+              <p style={{
+                fontFamily: SANS, fontWeight: 300, fontSize: 11,
+                color: 'rgba(253,251,247,0.4)', marginTop: 8,
+              }}>
+                US and Canada only. Ships August 2026.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── SECTION 6: EMAIL CAPTURE ── */}
-      <section style={{ background: CARD_BG, padding: '3rem 1.5rem', textAlign: 'center' }}>
-        <div style={{ maxWidth: 480, margin: '0 auto' }}>
+      {/* ── BRAND STATEMENT ── */}
+      <section id="brand-statement" className="k-section" style={{ textAlign: 'center' }}>
+        <div style={{ maxWidth: 640, margin: '0 auto' }}>
+          <div style={{ width: 32, height: 0.5, background: GREEN_MID, margin: '0 auto 2.5rem' }} />
+          <p style={{ fontFamily: SERIF, fontSize: 17, lineHeight: 1.9, color: MUTED, marginBottom: '1.5rem' }}>
+            Kijivu is a US-based wellness brand building clinically formulated supplements for women of African descent, starting with East Africa and the African diaspora.
+          </p>
+          <p style={{ fontFamily: SERIF, fontSize: 17, lineHeight: 1.9, color: MUTED, margin: 0 }}>
+            TAJI was formulated around the nutritional gaps the wellness industry has consistently overlooked. If iron deficiency, chronic stress, or hormonal gaps are your root cause, the science works for you regardless of your background.
+          </p>
+          <div style={{ width: 32, height: 0.5, background: GREEN_MID, margin: '2.5rem auto 0' }} />
+        </div>
+      </section>
+
+      {/* ── EMAIL CAPTURE ── */}
+      <section style={{ background: CREAM_CARD, padding: '3rem 1.5rem', textAlign: 'center' }}>
+        <div style={{ maxWidth: 440, margin: '0 auto' }}>
           {!emailSent ? (
             <>
               <p style={{
-                fontFamily: "'EB Garamond', serif", fontStyle: 'italic',
-                fontSize: 18, color: BODY_TEXT, marginBottom: '1.5rem',
+                fontFamily: SERIF, fontStyle: 'italic', fontSize: 20,
+                color: INK, marginBottom: '1.75rem', lineHeight: 1.5,
               }}>
                 Stay close to what we are building.
               </p>
-              <form
-                onSubmit={handleEmailSubmit}
-                style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}
-              >
+              <form onSubmit={handleEmailSubmit} style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
                 <input
                   type="email"
                   required
@@ -384,28 +250,20 @@ export default function HomePage({ cart = [], onAddToCart }) {
                   onChange={e => setEmailValue(e.target.value)}
                   placeholder="Your email address"
                   style={{
-                    flex: '1 1 220px', padding: '12px 16px',
-                    fontFamily: "'Montserrat', sans-serif", fontWeight: 300, fontSize: 14,
-                    border: `1px solid rgba(28,28,26,0.18)`, borderRadius: 6,
-                    color: BODY_TEXT, background: '#fff', outline: 'none',
+                    flex: '1 1 200px', padding: '11px 14px',
+                    fontFamily: SANS, fontWeight: 300, fontSize: 13,
+                    border: `1px solid ${BORDER}`, borderRadius: 8,
+                    color: INK, background: CREAM, outline: 'none',
                   }}
                 />
-                <button
-                  type="submit"
-                  style={{
-                    fontFamily: "'Montserrat', sans-serif", fontWeight: 500, fontSize: 14,
-                    background: FOREST, color: '#fff',
-                    border: 'none', borderRadius: 6, padding: '12px 22px',
-                    cursor: 'pointer',
-                  }}
-                >
+                <button type="submit" className="k-btn-primary">
                   Join us
                 </button>
               </form>
             </>
           ) : (
-            <p style={{ fontFamily: "'EB Garamond', serif", fontStyle: 'italic', fontSize: 18, color: FOREST }}>
-              You're in. We'll be in touch.
+            <p style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 18, color: GREEN_MID }}>
+              You are on the list. We will be in touch.
             </p>
           )}
         </div>
@@ -413,19 +271,21 @@ export default function HomePage({ cart = [], onAddToCart }) {
 
       {/* ── FOOTER ── */}
       <footer style={{
-        background: FOREST, color: MINT,
+        background: INK, color: CREAM,
         padding: '2.5rem 2rem', textAlign: 'center',
+        borderTop: `0.5px solid rgba(253,251,247,0.08)`,
       }}>
-        <div style={{ maxWidth: 640, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-          <img src="/Kijivu Logo Design.png" alt="Kijivu" style={{ height: 40, opacity: 0.9 }} />
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300, fontSize: 12, color: 'rgba(159,225,203,0.7)', letterSpacing: '0.06em' }}>
-            Wellness rooted in science. Built for African women.
+        <div style={{ maxWidth: 600, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+          <img src="/Kijivu Logo Design.png" alt="Kijivu" style={{ height: 34, opacity: 0.8 }} />
+          <div style={{ width: 28, height: 0.5, background: GREEN_MID }} />
+          <p style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 14, color: 'rgba(253,251,247,0.45)' }}>
+            Hair, approached at the root.
           </p>
           <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
             {[
-              { label: 'About',   href: '/about' },
-              { label: 'Shop',    href: '/shop' },
-              { label: 'Privacy', href: '/privacy' },
+              { label: 'About',     href: '/about' },
+              { label: 'Shop',      href: '/shop' },
+              { label: 'Privacy',   href: '/privacy' },
               { label: 'Instagram', href: 'https://www.instagram.com/kijivu_/' },
               { label: 'TikTok',    href: 'https://www.tiktok.com/@kijivu_' },
               { label: 'WhatsApp',  href: 'https://wa.me/254705016590' },
@@ -436,17 +296,20 @@ export default function HomePage({ cart = [], onAddToCart }) {
                 target={href.startsWith('http') ? '_blank' : undefined}
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 style={{
-                  fontFamily: "'Montserrat', sans-serif", fontWeight: 300,
-                  fontSize: 12, color: 'rgba(159,225,203,0.55)',
-                  textDecoration: 'none', letterSpacing: '0.04em',
+                  fontFamily: SANS, fontWeight: 300, fontSize: 10,
+                  letterSpacing: '0.12em', textTransform: 'uppercase',
+                  color: 'rgba(253,251,247,0.35)', textDecoration: 'none',
                 }}
               >
                 {label}
               </a>
             ))}
           </div>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300, fontSize: 11, color: 'rgba(159,225,203,0.3)', marginTop: '0.5rem' }}>
-            © 2026 Kijivu. All rights reserved.
+          <p style={{
+            fontFamily: SANS, fontWeight: 300, fontSize: 9,
+            color: 'rgba(253,251,247,0.2)', letterSpacing: '0.06em',
+          }}>
+            &copy; 2026 Kijivu. All rights reserved.
           </p>
         </div>
       </footer>
