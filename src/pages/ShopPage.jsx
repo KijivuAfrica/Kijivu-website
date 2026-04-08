@@ -28,7 +28,7 @@ const tajiProduct = {
   name: 'TAJI',
   price: 36,
   priceCurrency: 'USD',
-  image: '/taji-kijivu-deep-forest-logo.png',
+  image: '/ChatGPT Image Apr 3, 2026, 04_02_47 PM.png',
   badge: 'Presale Open',
   description: 'Our original formula, developed for the biological systems that govern hair health. Formulated for women whose root cause has been consistently overlooked.',
 };

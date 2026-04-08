@@ -123,7 +123,7 @@ export default function HomePage() {
             aspectRatio: '1',
           }}>
             <img
-              src="/taji-kijivu-deep-forest-logo.png"
+              src="/ChatGPT Image Apr 3, 2026, 04_02_47 PM.png"
               alt="TAJI by Kijivu"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: 0.9 }}
               onError={e => {
