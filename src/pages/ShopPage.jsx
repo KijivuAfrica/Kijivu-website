@@ -30,7 +30,7 @@ const tajiProduct = {
   priceCurrency: 'USD',
   image: '/ChatGPT Image Apr 3, 2026, 04_02_47 PM.png',
   badge: 'Presale Open',
-  description: 'Our original formula, developed for the biological systems that govern hair health. Formulated for women whose root cause has been consistently overlooked.',
+  description: 'TAJI was not built for the broadest possible market. It was built for the woman whose iron has been flagged, whose stress is real, and whose hair has been stalling despite everything she has tried. The formula goes to the root because that is the only place this problem gets solved.',
 };
 
 export default function ShopPage() {
@@ -54,7 +54,7 @@ export default function ShopPage() {
             fontFamily: SERIF, fontStyle: 'italic', fontSize: '1.1rem',
             color: 'rgba(253,251,247,0.55)', maxWidth: 400, lineHeight: 1.65, margin: 0,
           }}>
-            Our first product. Formulated for you.
+            One product. Built with intention.
           </p>
         </div>
       </div>

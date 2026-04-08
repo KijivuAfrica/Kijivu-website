@@ -73,9 +73,18 @@ export default function HomePage() {
         {/* Tagline */}
         <p style={{
           fontFamily: SERIF, fontStyle: 'italic', fontSize: 20,
-          color: MUTED, marginBottom: '2.5rem', lineHeight: 1.5,
+          color: MUTED, marginBottom: '1.25rem', lineHeight: 1.5,
         }}>
           Hair, approached at the root.
+        </p>
+
+        {/* Subheading */}
+        <p style={{
+          fontFamily: SERIF, fontSize: 16,
+          color: MUTED, marginBottom: '2.5rem', lineHeight: 1.75,
+          maxWidth: 480,
+        }}>
+          For the woman whose hair has been at a standstill and whose iron has been flagged low. The root cause, finally addressed.
         </p>
 
         {/* CTAs */}
@@ -157,7 +166,7 @@ export default function HomePage() {
               fontFamily: SERIF, fontSize: 16, color: 'rgba(253,251,247,0.75)',
               lineHeight: 1.85, margin: 0,
             }}>
-              For women who have tried everything and still aren't getting answers. Built around the biology most supplements overlook.
+              You have done everything right on the outside. The protective styles, the satin pillowcase, the products that promised something and delivered nothing. Your hair is still at the same length it was a year ago. That is not a discipline problem. TAJI was built for what is actually going on underneath.
             </p>
 
             {/* Badges */}
@@ -212,10 +221,10 @@ export default function HomePage() {
         <div style={{ maxWidth: 640, margin: '0 auto' }}>
           <div style={{ width: 32, height: 0.5, background: GREEN_MID, margin: '0 auto 2.5rem' }} />
           <p style={{ fontFamily: SERIF, fontSize: 17, lineHeight: 1.9, color: MUTED, marginBottom: '1.5rem' }}>
-            Kijivu is a US-based wellness brand building clinically formulated supplements for women of African descent, starting with East Africa and the African diaspora.
+            Kijivu is a US-based wellness brand building clinically formulated supplements for women of African descent and the global African diaspora.
           </p>
           <p style={{ fontFamily: SERIF, fontSize: 17, lineHeight: 1.9, color: MUTED, margin: 0 }}>
-            TAJI was formulated around the nutritional gaps the wellness industry has consistently overlooked. If iron deficiency, chronic stress, or hormonal gaps are your root cause, the science works for you regardless of your background.
+            We started with the gap the mainstream wellness industry has ignored for decades: the nutritional deficiency profiles most common in Black women, and the products that were never built around them. TAJI is our first answer to that. It will not be the last.
           </p>
           <div style={{ width: 32, height: 0.5, background: GREEN_MID, margin: '2.5rem auto 0' }} />
         </div>

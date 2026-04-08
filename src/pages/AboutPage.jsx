@@ -39,7 +39,7 @@ export default function AboutPage() {
             fontFamily: SERIF, fontStyle: 'italic', fontSize: '1.2rem',
             color: 'rgba(253,251,247,0.6)', maxWidth: 480, lineHeight: 1.65, margin: 0,
           }}>
-            Built for every woman who has been underserved, overlooked, or simply forgotten by the mainstream wellness industry.
+            Built by a woman who needed it, for a community the wellness industry built around last.
           </p>
         </div>
       </div>
@@ -88,13 +88,13 @@ export default function AboutPage() {
 
             <div style={{ fontFamily: SERIF, fontSize: 16, lineHeight: 1.85, color: '#FDFBF7' }}>
               <p style={{ marginBottom: '1.5rem' }}>
-                Xaviera McCleskey is a Kenyan-born, Southern California-based entrepreneur with a background in communications, outreach, and supply chain across sub-Saharan Africa. She holds an MBA alongside a Master's in International Affairs from The George Washington University.
+                Xaviera McCleskey is a Kenyan-born, Southern California-based entrepreneur with a background in communications, outreach, and supply chain across sub-Saharan Africa. She holds an MBA and a Master's in International Affairs from The George Washington University. She also has hair that has been at a standstill while her iron levels went unaddressed for longer than she wants to admit. That is not a footnote to the Kijivu story. That is the whole story.
               </p>
               <p style={{ marginBottom: '1.5rem' }}>
-                Kijivu, meaning gray in Swahili, was born from that intersection — the space between cultures, between science and lived experience, between what the wellness industry offers and what women of African descent actually need.
+                Kijivu, meaning gray in Swahili, was born from that intersection. The space between cultures, between science and lived experience, between what the wellness industry offers and what women of African descent actually need. Gray is not a lack of color. It is where two things meet.
               </p>
               <p style={{ marginBottom: '1.5rem' }}>
-                TAJI is our first product. A daily hair supplement formulated around the nutritional deficiency profiles most common in women of African descent — built by a founder who needed it, for a community that has been consistently overlooked.
+                TAJI is our first product. A daily hair supplement built around the nutritional deficiency profiles most common in women of African descent. Formulated by a founder who needed it. For a community that has been waiting for someone to take this seriously.
               </p>
               <p style={{ marginBottom: '2.5rem' }}>
                 TAJI ships August 2026. US and Canada customers can reserve now at the founder presale price of $36. International customers can join the waitlist below.
@@ -144,15 +144,15 @@ export default function AboutPage() {
             {[
               {
                 title: 'Clinically Backed',
-                body: 'Every product we stock is chosen for its bioavailability and clinical evidence. No filler, no trends, no guesswork.',
+                body: 'Every formula starts with the evidence. Bioavailable forms only, not the cheaper alternatives that look the same on a label but absorb differently. No filler. No trends. No guesswork.',
               },
               {
                 title: 'Radically Accessible',
-                body: 'Pay 50% deposit, balance on delivery. Order on WhatsApp. Next-day dispatch. We removed every barrier we could find.',
+                body: 'Pay 50% deposit, balance on delivery. Order on WhatsApp. Next-day dispatch. We removed every barrier we could find, because a product that works means nothing if she cannot get to it.',
               },
               {
-                title: 'Built for You',
-                body: 'TAJI was developed from scratch, designed around the nutritional gaps mainstream brands have ignored for decades.',
+                title: 'Built for Her Specifically',
+                body: 'TAJI was not adapted from an existing formula. It was built from scratch around the nutritional profiles most common in women of African descent. The gaps mainstream brands have ignored for decades are the foundation of everything we make.',
               },
             ].map(({ title, body }) => (
               <div key={title} style={{
@@ -211,13 +211,13 @@ export default function AboutPage() {
             fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
             color: INK, marginBottom: '1rem', lineHeight: 1.2,
           }}>
-            Ready to start your wellness journey?
+            Ready?
           </h2>
           <p style={{
             fontFamily: SERIF, fontSize: 16, color: MUTED,
             marginBottom: '2.5rem', lineHeight: 1.85,
           }}>
-            Browse our range or message us directly on WhatsApp. We are a real team and we are here to help.
+            Browse the range or message us directly on WhatsApp. We are a real team built by a real founder who has been exactly where you are. We are here.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a href="/shop" className="k-btn-primary">
