@@ -88,7 +88,7 @@ export default function AboutPage() {
 
             <div style={{ fontFamily: SERIF, fontSize: 16, lineHeight: 1.85, color: 'rgba(253,251,247,0.92)' }}>
               <p style={{ marginBottom: '1.5rem' }}>
-                Xaviera McCleskey is a Kenyan-born, Southern California-based entrepreneur with a background in communications, outreach, and supply chain across sub-Saharan Africa. She holds an MBA and a Master's in International Affairs from George Washington University.
+                Xaviera McCleskey is a Kenyan-born, Southern California-based entrepreneur with a background in communications, outreach, and supply chain across sub-Saharan Africa. She holds an MBA alongside a Master's in International Affairs from The George Washington University.
               </p>
               <p style={{ marginBottom: '1.5rem' }}>
                 Kijivu, meaning gray in Swahili, was born from that intersection — the space between cultures, between science and lived experience, between what the wellness industry offers and what women of African descent actually need.
