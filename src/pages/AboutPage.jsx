@@ -75,7 +75,7 @@ export default function AboutPage() {
 
           {/* Bio */}
           <div style={{ paddingTop: '1rem' }}>
-            <span className="k-label" style={{ color: 'rgba(253,251,247,0.7)', display: 'block', marginBottom: '1.5rem' }}>
+            <span className="k-label" style={{ color: '#9FE1CB', display: 'block', marginBottom: '1.5rem' }}>
               Meet the Founder
             </span>
             <h2 style={{
@@ -86,7 +86,7 @@ export default function AboutPage() {
               Xaviera McCleskey
             </h2>
 
-            <div style={{ fontFamily: SERIF, fontSize: 16, lineHeight: 1.85, color: 'rgba(253,251,247,0.92)' }}>
+            <div style={{ fontFamily: SERIF, fontSize: 16, lineHeight: 1.85, color: '#FDFBF7' }}>
               <p style={{ marginBottom: '1.5rem' }}>
                 Xaviera McCleskey is a Kenyan-born, Southern California-based entrepreneur with a background in communications, outreach, and supply chain across sub-Saharan Africa. She holds an MBA alongside a Master's in International Affairs from The George Washington University.
               </p>
