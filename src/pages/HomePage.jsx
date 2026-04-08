@@ -70,16 +70,6 @@ export default function HomePage() {
         {/* Divider */}
         <div style={{ width: 40, height: 0.5, background: GREEN_MID, margin: '0.75rem auto 1.5rem' }} />
 
-        {/* Bottle image */}
-        <div style={{ width: '100%', maxWidth: 240, marginBottom: '2rem' }}>
-          <img
-            src="/taji-hero-editorial.png"
-            alt="TAJI by Kijivu, daily hair supplement"
-            style={{ width: '100%', height: 'auto', display: 'block' }}
-            onError={e => { e.currentTarget.style.display = 'none'; }}
-          />
-        </div>
-
         {/* Tagline */}
         <p style={{
           fontFamily: SERIF, fontStyle: 'italic', fontSize: 20,
@@ -133,7 +123,7 @@ export default function HomePage() {
             aspectRatio: '1',
           }}>
             <img
-              src="/taji-hero-editorial.png"
+              src="/taji-kijivu-deep-forest-logo.png"
               alt="TAJI by Kijivu"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: 0.9 }}
               onError={e => {

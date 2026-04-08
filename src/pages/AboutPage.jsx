@@ -75,7 +75,7 @@ export default function AboutPage() {
 
           {/* Bio */}
           <div style={{ paddingTop: '1rem' }}>
-            <span className="k-label" style={{ color: 'rgba(253,251,247,0.45)', display: 'block', marginBottom: '1.5rem' }}>
+            <span className="k-label" style={{ color: 'rgba(253,251,247,0.7)', display: 'block', marginBottom: '1.5rem' }}>
               Meet the Founder
             </span>
             <h2 style={{
@@ -86,18 +86,18 @@ export default function AboutPage() {
               Xaviera McCleskey
             </h2>
 
-            <div style={{ fontFamily: SERIF, fontSize: 16, lineHeight: 1.85, color: 'rgba(253,251,247,0.7)' }}>
+            <div style={{ fontFamily: SERIF, fontSize: 16, lineHeight: 1.85, color: 'rgba(253,251,247,0.92)' }}>
               <p style={{ marginBottom: '1.5rem' }}>
-                Kijivu is a US-based wellness brand founded by Xaviera McCleskey, a Kenyan-born San Diego-based entrepreneur with six years of international health supply chain experience across sub-Saharan Africa.
+                Xaviera McCleskey is a Kenyan-born, Southern California-based entrepreneur with a background in communications, outreach, and supply chain across sub-Saharan Africa. She holds an MBA and a Master's in International Affairs from George Washington University.
               </p>
               <p style={{ marginBottom: '1.5rem' }}>
-                The name Kijivu means gray in Swahili, a nod to the space between black and white, representing the nuanced science-meets-culture approach Kijivu takes to African women's wellness.
+                Kijivu, meaning gray in Swahili, was born from that intersection — the space between cultures, between science and lived experience, between what the wellness industry offers and what women of African descent actually need.
               </p>
               <p style={{ marginBottom: '1.5rem' }}>
-                Our first product, TAJI, is a daily hair supplement formulated around the nutritional deficiency profiles most common in women of African descent. It was built by a founder who needed it, for a community that has been underserved by the wellness industry for too long.
+                TAJI is our first product. A daily hair supplement formulated around the nutritional deficiency profiles most common in women of African descent — built by a founder who needed it, for a community that has been consistently overlooked.
               </p>
               <p style={{ marginBottom: '2.5rem' }}>
-                TAJI ships August 2026. US customers can reserve a bottle now at the founder presale price of $36. International customers can join the waitlist to be notified when TAJI is available in their region.
+                TAJI ships August 2026. US and Canada customers can reserve now at the founder presale price of $36. International customers can join the waitlist below.
               </p>
             </div>
 

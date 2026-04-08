@@ -11,7 +11,6 @@ import ShopPage from './pages/ShopPage';
 import AboutPage from './pages/AboutPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import AnnouncementBar from './components/AnnouncementBar';
-import TajiMobileBanner from './components/TajiMobileBanner';
 import KijivuNav from './components/KijivuNav';
 import KijivuRegionPopup from './components/KijivuRegionPopup';
 
@@ -55,7 +54,6 @@ function App() {
       {!barDismissed && <AnnouncementBar onDismiss={() => setBarDismissed(true)} />}
       <KijivuNav cart={cart} topOffset={barDismissed ? 0 : 40} />
       <KijivuRegionPopup />
-      <TajiMobileBanner />
       <Routes>
         <Route path="/"             element={<HomePage cart={cart} onAddToCart={addToCart} />} />
         <Route path="/product/:id"  element={<ProductPage cart={cart} onAddToCart={addToCart} />} />
