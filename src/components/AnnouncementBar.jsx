@@ -1,5 +1,5 @@
 // AnnouncementBar — visibility controlled by App.jsx via localStorage
-const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/';
+const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/collections/all';
 
 const GREEN_DARK = '#1A5C3A';
 const SANS       = "'Montserrat', sans-serif";

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/';
+const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/collections/all';
 
 const CREAM      = '#FDFBF7';
 const INK        = '#1C1C1A';

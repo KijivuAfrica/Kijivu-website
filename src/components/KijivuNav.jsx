@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 
-const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/';
+const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/collections/all';
 
 const CREAM      = '#FDFBF7';
 const INK        = '#1C1C1A';

@@ -1,6 +1,6 @@
 import { MessageCircle, ArrowRight } from 'lucide-react';
 
-const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/';
+const SHOPIFY_URL = 'https://4ykyr0-mp.myshopify.com/collections/all';
 
 const CREAM      = '#FDFBF7';
 const CREAM_CARD = '#F8F4EE';
